@@ -139,6 +139,12 @@ result.innerHTML = shifts[value]
 
 result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 
+  // po 2 sekundách vymazat
+setTimeout(() => {
+this.value = ""
+result.innerHTML = ""
+this.focus()
+}, 2000)
 }
 
 // zavře klávesnici
@@ -152,11 +158,12 @@ this.select()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=5")
+  navigator.serviceWorker.register("sw.js?v=6")
 }
 </script>
 </body>
 </html>
+
 
 
 
