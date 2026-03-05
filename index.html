@@ -75,19 +75,20 @@ font-size:clamp(20px,4vw,26px);
 
 </div>
 <script>
-const input = document.getElementById("shiftInput")
 
+const input = document.getElementById("shiftInput")
+const result = document.getElementById("result")
+
+// autofocus na mobilu
 if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
   window.addEventListener("load", () => {
-    setTimeout(() => {
-      input.focus()
-    }, 300)
+    setTimeout(() => input.focus(), 300)
   })
 }
 
-  
 let shifts = {}
 
+// načtení Google Sheet
 fetch("https://docs.google.com/spreadsheets/d/1-AKoAdLP2HceuipD6Cakb225Y2nF90ANW1ZhvyfTQoc/gviz/tq?tqx=out:json")
 .then(res => res.text())
 .then(text => {
@@ -114,41 +115,43 @@ shifts[id].push(txt || "")
 
 })
 
-["input","keyup","change"].forEach(evt => {
-document.getElementById("shiftInput").addEventListener(evt, handleInput)
-})
+// event listener
+input.addEventListener("input", handleInput)
 
 function handleInput(){
 
-let value = this.value.replace(/\D/g,'').trim()
-this.value = value
-
-let result = document.getElementById("result")
+let value = input.value.replace(/\D/g,'').trim()
+input.value = value
 
 if(value.length !== 3){
 result.innerHTML = ""
 return
 }
 
-// směna není vůbec v tabulce
+// směna neexistuje
 if(!shifts[value]){
-navigator.vibrate([80,80,80]) // dvě krátké
+
+navigator.vibrate?.([80,80,80])
+
 result.innerHTML = `<div class="notfound">Taková směna tu není :(</div>`
-this.blur()
+
+input.blur()
+
 setTimeout(() => {
-this.focus()
-this.select()
+input.focus()
+input.select()
 }, 2000)
 
-  return
-
+return
 }
 
 // směna existuje
 let texts = shifts[value].filter(t => t && t.trim() !== "")
 
 if(texts.length > 0){
-navigator.vibrate(200) // delší vibrace
+
+navigator.vibrate?.(200)
+
 result.innerHTML = texts
 .map(t => `<div class="box">${t}</div>`)
 .join("")
@@ -159,23 +162,29 @@ result.innerHTML = `<div class="notfound">Tady zatím prohoz nikdo neposlal :(</
 
 }
 
-this.blur()
+input.blur()
+
 setTimeout(() => {
-this.focus()
-this.select()
+input.focus()
+input.select()
 }, 1000)
+
 }
-input.addEventListener("focus", function(){
-this.select()
+
+// označení textu při kliknutí
+input.addEventListener("focus", () => {
+input.select()
 })
+
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=14")
+  navigator.serviceWorker.register("sw.js?v=15")
 }
 </script>
 </body>
 </html>
+
 
 
 
