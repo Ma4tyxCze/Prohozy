@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Směny</title>
+<title>Prohozy směn</title>
 
 <style>
 body{
@@ -47,16 +47,15 @@ fetch("https://docs.google.com/spreadsheets/d/1-AKoAdLP2HceuipD6Cakb225Y2nF90ANW
 .then(text => {
 
 let json = JSON.parse(text.substring(47).slice(0,-2))
-
 let rows = json.table.rows
 
 rows.forEach(row => {
 
 let id = row.c[0]?.v
-let text = row.c[1]?.v
+let txt = row.c[1]?.v
 
 if(id){
-shifts[id] = text
+shifts[id] = txt
 }
 
 })
