@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Prohozy směn</title>
+<title>Prohozy</title>
 
 <style>
 body{
@@ -13,6 +13,12 @@ text-align:center;
 margin-top:100px;
 }
 
+.notfound{
+margin-top:30px;
+color:#ff6b6b;
+font-size:20px;
+}
+  
 .box{
 border:1px solid #444;
 padding:15px;
@@ -40,7 +46,7 @@ margin-right:auto;
 
 <body>
 
-<h1>Vyhledání směny</h1>
+<h1>Zadej směnu</h1>
 
 <input id="shiftInput" placeholder="číslo směny">
 
@@ -68,7 +74,9 @@ if(!shifts[id]){
 shifts[id] = []
 }
 
+if(txt){
 shifts[id].push(txt)
+}
 
 }
 
@@ -81,6 +89,11 @@ document.getElementById("shiftInput").addEventListener("input", function(){
 let value = this.value
 let result = document.getElementById("result")
 
+if(value === ""){
+result.innerHTML = ""
+return
+}
+
 if(shifts[value]){
 
 result.innerHTML = shifts[value]
@@ -89,7 +102,7 @@ result.innerHTML = shifts[value]
 
 }else{
 
-result.innerHTML = ""
+result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 
 }
 
@@ -99,4 +112,5 @@ result.innerHTML = ""
 
 </body>
 </html>
+
 
