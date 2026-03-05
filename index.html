@@ -145,7 +145,6 @@ result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 this.blur()
 
 })
-  const input = document.getElementById("shiftInput")
 
 input.addEventListener("focus", function(){
 this.select()
@@ -153,11 +152,12 @@ this.select()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=4")
+  navigator.serviceWorker.register("sw.js?v=5")
 }
 </script>
 </body>
 </html>
+
 
 
 
