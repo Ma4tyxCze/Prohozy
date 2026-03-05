@@ -111,9 +111,14 @@ result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 })
 
 </script>
-
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js")
+}
+</script>
 </body>
 </html>
+
 
 
 
