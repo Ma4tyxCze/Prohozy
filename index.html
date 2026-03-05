@@ -71,7 +71,17 @@ font-size:clamp(20px,4vw,26px);
 
 </div>
 <script>
+const input = document.getElementById("shiftInput")
 
+if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      input.focus()
+    }, 300)
+  })
+}
+
+  
 let shifts = {}
 
 fetch("https://docs.google.com/spreadsheets/d/1-AKoAdLP2HceuipD6Cakb225Y2nF90ANW1ZhvyfTQoc/gviz/tq?tqx=out:json")
@@ -134,6 +144,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
