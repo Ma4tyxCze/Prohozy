@@ -107,7 +107,7 @@ shifts[id] = []
 }
 
 if(txt){
-shifts[id].push(txt)
+shifts[id].push(txt || "")
 }
 
 }
@@ -131,14 +131,17 @@ return
 
 if(shifts[value]){
 
-result.innerHTML = shifts[value]
+let valid = shifts[value].filter(t => t && t.trim() !== "")
+
+if(valid.length > 0){
+
+result.innerHTML = valid
 .map(t => `<div class="box">${t}</div>`)
 .join("")
 
 }else{
 
-result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
-
+result.innerHTML = `<div class="notfound">Směna existuje, ale zatím bez prohozu</div>`
   // po 2 sekundách vymazat
 setTimeout(() => {
 this.value = ""
@@ -146,7 +149,11 @@ result.innerHTML = ""
 this.focus()
 }, 2000)
 }
+else{
 
+result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
+
+}
 // zavře klávesnici
 this.blur()
 
@@ -158,11 +165,12 @@ this.select()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=6")
+  navigator.serviceWorker.register("sw.js?v=7")
 }
 </script>
 </body>
 </html>
+
 
 
 
