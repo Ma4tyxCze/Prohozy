@@ -129,7 +129,7 @@ return
 // směna není vůbec v tabulce
 if(!shifts[value]){
 navigator.vibrate([80,80,80]) // dvě krátké
-result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
+result.innerHTML = `<div class="notfound">Taková směna tu není :(</div>`
 this.blur()
 setTimeout(() => {
 this.focus()
@@ -151,7 +151,7 @@ result.innerHTML = texts
 
 }else{
 
-result.innerHTML = `<div class="notfound">Směna existuje, ale zatím bez prohozu</div>`
+result.innerHTML = `<div class="notfound">Tady zatím prohoz nikdo neposlal :(</div>`
 
 }
 
@@ -167,11 +167,12 @@ this.select()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=10")
+  navigator.serviceWorker.register("sw.js?v=11")
 }
 </script>
 </body>
 </html>
+
 
 
 
