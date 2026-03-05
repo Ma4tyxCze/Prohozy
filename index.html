@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Směny</title>
+
+<style>
+body{
+font-family: Arial;
+background:#111;
+color:white;
+text-align:center;
+margin-top:100px;
+}
+
+input{
+padding:15px;
+font-size:22px;
+width:200px;
+text-align:center;
+}
+
+#result{
+margin-top:40px;
+font-size:22px;
+max-width:600px;
+margin-left:auto;
+margin-right:auto;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Vyhledání směny</h1>
+
+<input id="shiftInput" placeholder="číslo směny">
+
+<div id="result"></div>
+
+<script>
+
+let shifts = {}
+
+fetch("https://docs.google.com/spreadsheets/d/1-AKoAdLP2HceuipD6Cakb225Y2nF90ANW1ZhvyfTQoc/gviz/tq?tqx=out:json")
+.then(res => res.text())
+.then(text => {
+
+let json = JSON.parse(text.substring(47).slice(0,-2))
+
+let rows = json.table.rows
+
+rows.forEach(row => {
+
+let id = row.c[0]?.v
+let text = row.c[1]?.v
+
+if(id){
+shifts[id] = text
+}
+
+})
+
+})
+
+document.getElementById("shiftInput").addEventListener("input", function(){
+
+let value = this.value
+
+if(shifts[value]){
+document.getElementById("result").innerText = shifts[value]
+}else{
+document.getElementById("result").innerText = ""
+}
+
+})
+
+</script>
+
+</body>
+</html>
