@@ -106,8 +106,8 @@ if(!shifts[id]){
 shifts[id] = []
 }
 
-if(txt){
 shifts[id].push(txt || "")
+
 }
 
 }
@@ -118,58 +118,58 @@ shifts[id].push(txt || "")
 
 document.getElementById("shiftInput").addEventListener("input", function(){
 
-let value = this.value.replace(/\D/g,'')
+let value = this.value.replace(/\D/g,'').trim()
 this.value = value
 
 let result = document.getElementById("result")
 
-// dokud nejsou 3 číslice, nic nedělej
-if(value.length < 3){
+if(value.length !== 3){
 result.innerHTML = ""
 return
 }
 
-if(shifts[value]){
+// směna není vůbec v tabulce
+if(!shifts[value]){
 
-let valid = shifts[value].filter(t => t && t.trim() !== "")
+result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
+this.blur()
+return
 
-if(valid.length > 0){
+}
 
-result.innerHTML = valid
+// směna existuje
+let texts = shifts[value].filter(t => t && t.trim() !== "")
+
+if(texts.length > 0){
+
+result.innerHTML = texts
 .map(t => `<div class="box">${t}</div>`)
 .join("")
 
 }else{
 
 result.innerHTML = `<div class="notfound">Směna existuje, ale zatím bez prohozu</div>`
-  // po 2 sekundách vymazat
-setTimeout(() => {
-this.value = ""
-result.innerHTML = ""
-this.focus()
-}, 2000)
-}
-else{
-
-result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 
 }
-// zavře klávesnici
+
 this.blur()
-
+setTimeout(() => {
+this.focus()
+this.select()
+}, 1000)
 })
-
 input.addEventListener("focus", function(){
 this.select()
 })
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=7")
+  navigator.serviceWorker.register("sw.js?v=8")
 }
 </script>
 </body>
 </html>
+
 
 
 
