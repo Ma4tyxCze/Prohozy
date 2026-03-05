@@ -112,10 +112,13 @@ shifts[id].push(txt)
 
 document.getElementById("shiftInput").addEventListener("input", function(){
 
-let value = this.value
+let value = this.value.replace(/\D/g,'')
+this.value = value
+
 let result = document.getElementById("result")
 
-if(value === ""){
+// dokud nejsou 3 číslice, nic nedělej
+if(value.length < 3){
 result.innerHTML = ""
 return
 }
@@ -126,14 +129,19 @@ result.innerHTML = shifts[value]
 .map(t => `<div class="box">${t}</div>`)
 .join("")
 
+// zavře klávesnici
+this.blur()
+
 }else{
 
 result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 
+// zavře klávesnici
+this.blur()
+
 }
 
 })
-
 </script>
 <script>
 if ("serviceWorker" in navigator) {
@@ -142,6 +150,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
