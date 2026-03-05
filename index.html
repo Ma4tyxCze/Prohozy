@@ -6,49 +6,69 @@
 <meta name="theme-color" content="#111111">
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Prohozy</title>
-
 <style>
 body{
 font-family: Arial;
 background:#111;
 color:white;
+margin:0;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
 text-align:center;
-margin-top:100px;
+}
+
+.container{
+width:90%;
+max-width:700px;
+}
+
+h1{
+font-size:clamp(28px,5vw,40px);
+margin-bottom:30px;
+}
+
+input{
+width:100%;
+padding:20px;
+font-size:clamp(26px,6vw,40px);
+text-align:center;
+border-radius:10px;
+border:none;
+margin-bottom:30px;
+}
+
+#result{
+font-size:clamp(20px,4vw,28px);
+}
+
+.box{
+border:1px solid #444;
+padding:20px;
+margin:15px 0;
+border-radius:10px;
+background:#1b1b1b;
 }
 
 .notfound{
 margin-top:30px;
 color:#ff6b6b;
-font-size:20px;
+font-size:clamp(20px,4vw,26px);
 }
-  
-.box{
-border:1px solid #444;
-padding:15px;
-margin:10px;
-border-radius:8px;
-background:#1b1b1b;
-}  
-  
-input{
-padding:15px;
-font-size:22px;
-width:200px;
-text-align:center;
-}
-
-#result{
-margin-top:40px;
-font-size:22px;
-max-width:600px;
-margin-left:auto;
-margin-right:auto;
-}
-</style>
+  </style>
 </head>
 
 <body>
+<div class="container">
 
+<h1>Vyhledání směny</h1>
+
+<input id="shiftInput" placeholder="číslo směny">
+
+<div id="result"></div>
+
+</div>
 <h1>Zadej směnu</h1>
 
 <input id="shiftInput" placeholder="číslo směny">
@@ -119,6 +139,7 @@ if ("serviceWorker" in navigator) {
 </script>
 </body>
 </html>
+
 
 
 
