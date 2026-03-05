@@ -131,7 +131,12 @@ if(!shifts[value]){
 navigator.vibrate([80,80,80]) // dvě krátké
 result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 this.blur()
-return
+setTimeout(() => {
+this.focus()
+this.select()
+}, 2000)
+
+  return
 
 }
 
@@ -162,11 +167,12 @@ this.select()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=9")
+  navigator.serviceWorker.register("sw.js?v=10")
 }
 </script>
 </body>
 </html>
+
 
 
 
