@@ -13,6 +13,14 @@ text-align:center;
 margin-top:100px;
 }
 
+.box{
+border:1px solid #444;
+padding:15px;
+margin:10px;
+border-radius:8px;
+background:#1b1b1b;
+}  
+  
 input{
 padding:15px;
 font-size:22px;
@@ -55,7 +63,13 @@ let id = row.c[0]?.v
 let txt = row.c[1]?.v
 
 if(id){
-shifts[id] = txt
+
+if(!shifts[id]){
+shifts[id] = []
+}
+
+shifts[id].push(txt)
+
 }
 
 })
@@ -65,11 +79,18 @@ shifts[id] = txt
 document.getElementById("shiftInput").addEventListener("input", function(){
 
 let value = this.value
+let result = document.getElementById("result")
 
 if(shifts[value]){
-document.getElementById("result").innerText = shifts[value]
+
+result.innerHTML = shifts[value]
+.map(t => `<div class="box">${t}</div>`)
+.join("")
+
 }else{
-document.getElementById("result").innerText = ""
+
+result.innerHTML = ""
+
 }
 
 })
@@ -78,3 +99,4 @@ document.getElementById("result").innerText = ""
 
 </body>
 </html>
+
