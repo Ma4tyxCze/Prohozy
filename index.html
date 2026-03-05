@@ -114,7 +114,11 @@ shifts[id].push(txt || "")
 
 })
 
-document.getElementById("shiftInput").addEventListener("input", function(){
+["input","keyup","change"].forEach(evt => {
+document.getElementById("shiftInput").addEventListener(evt, handleInput)
+})
+
+function handleInput(){
 
 let value = this.value.replace(/\D/g,'').trim()
 this.value = value
@@ -160,6 +164,7 @@ setTimeout(() => {
 this.focus()
 this.select()
 }, 1000)
+  }
 })
 input.addEventListener("focus", function(){
 this.select()
@@ -167,11 +172,12 @@ this.select()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=11")
+  navigator.serviceWorker.register("sw.js?v=12")
 }
 </script>
 </body>
 </html>
+
 
 
 
