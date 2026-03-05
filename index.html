@@ -15,18 +15,27 @@ margin:0;
 padding:20px;
 display:flex;
 justify-content:center;
-align-items:center;
+align-items:flex-start;
 min-height:100vh;
 text-align:center;
 }
 *{
 box-sizing:border-box;
 }
+.logo{
+width:120px;
+margin-bottom:20px;
+}
+
+  .title{
+color:#FFD400;
+}
   
 .container{
 width:100%;
 max-width:700px;
 padding:20px;
+  margin-top:40px;
 }
 
 h1{
@@ -67,7 +76,7 @@ font-size:clamp(20px,4vw,26px);
 
 <body>
 <div class="container">
-
+<img src="icon.png" class="logo">
 <h1>Vyhledání směny</h1>
 
 <input id="shiftInput" placeholder="číslo směny" inputmode="numeric" maxlength="3" autocomplete="off">
@@ -179,11 +188,12 @@ input.select()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=15")
+  navigator.serviceWorker.register("sw.js?v=16")
 }
 </script>
 </body>
 </html>
+
 
 
 
