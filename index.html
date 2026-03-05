@@ -144,6 +144,12 @@ result.innerHTML = `<div class="notfound">Tady zatím nic nemáme :(</div>`
 
 // zavře klávesnici
 this.blur()
+// po 4 sekundách reset
+setTimeout(() => {
+this.value = ""
+result.innerHTML = ""
+this.focus()
+}, 1000)
 
 }
 
@@ -151,11 +157,12 @@ this.blur()
 </script>
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=2")
+  navigator.serviceWorker.register("sw.js?v=3")
 }
 </script>
 </body>
 </html>
+
 
 
 
