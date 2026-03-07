@@ -5,8 +5,10 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#111111">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prohozy</title>
+<title>Prohozy</title>
+
 <style>
+
 body{
 font-family: Arial;
 background:#111;
@@ -23,20 +25,38 @@ text-align:center;
 *{
 box-sizing:border-box;
 }
+
 .logo{
 width:300px;
 margin-bottom:20px;
 }
 
-  .title{
+.title{
 color:#FFD400;
 }
-  
+
 .container{
 width:100%;
 max-width:700px;
 padding:20px;
-  margin-top:40px;
+margin-top:40px;
+}
+
+.gvdBox{
+width:100%;
+display:flex;
+justify-content:center;
+margin-bottom:20px;
+}
+
+#gvdSelect{
+background:#222;
+color:#FFD400;
+border:1px solid #444;
+padding:8px 14px;
+font-size:16px;
+border-radius:6px;
+margin-right:80px;
 }
 
 h1{
@@ -72,44 +92,64 @@ margin-top:30px;
 color:#ff6b6b;
 font-size:clamp(20px,4vw,26px);
 }
-  </style>
+
+</style>
 </head>
 
 <body>
+
 <div class="container">
+
 <img src="icon.png" class="logo">
+
+<div class="gvdBox">
+<select id="gvdSelect">
+<option value="432">GVD 432</option>
+<option value="433">GVD 433</option>
+<option value="434">GVD 434</option>
+</select>
+</div>
+
 <h1>Vyhledání směny</h1>
 
 <input id="shiftInput" placeholder="číslo směny" inputmode="numeric" maxlength="3" autocomplete="off">
+
 <div id="result"></div>
 
 </div>
+
 <script>
 
 const input = document.getElementById("shiftInput")
 const result = document.getElementById("result")
+const gvdSelect = document.getElementById("gvdSelect")
+
+let shifts = {}
+let selectedSheet = "432"
 
 // autofocus na mobilu
 if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-  window.addEventListener("load", () => {
-    setTimeout(() => input.focus(), 300)
-  })
+window.addEventListener("load", () => {
+setTimeout(() => input.focus(), 300)
+})
 }
 
-let shifts = {}
+// načtení dat z Google Sheet
+function loadData(){
 
-// načtení Google Sheet
-fetch("https://docs.google.com/spreadsheets/d/1-AKoAdLP2HceuipD6Cakb225Y2nF90ANW1ZhvyfTQoc/gviz/tq?tqx=out:json")
-.then(res => res.text())
-.then(text => {
+shifts = {}
+result.innerHTML = ""
 
-let json = JSON.parse(text.substring(47).slice(0,-2))
-let rows = json.table.rows
+fetch(`https://opensheet.elk.sh/1-AKoAdLP2HceuipD6Cakb225Y2nF90ANW1ZhvyfTQoc/${selectedSheet}`)
 
-rows.forEach(row => {
+.then(res => res.json())
 
-let id = row.c[0]?.v
-let txt = row.c[1]?.v
+.then(data => {
+
+data.forEach(row => {
+
+let id = row.ID || row.id || row[Object.keys(row)[0]]
+let txt = row.Text || row.text || row[Object.keys(row)[1]]
 
 if(id){
 
@@ -124,6 +164,19 @@ shifts[id].push(txt || "")
 })
 
 })
+
+}
+
+// změna GVD
+gvdSelect.addEventListener("change", function(){
+
+selectedSheet = this.value
+loadData()
+
+})
+
+// první načtení
+loadData()
 
 // event listener
 input.addEventListener("input", handleInput)
@@ -165,17 +218,21 @@ navigator.vibrate?.(200)
 result.innerHTML = texts
 .map(t => `<div class="box">${t}</div>`)
 .join("")
+
 result.scrollIntoView({
-  behavior: "smooth",
-  block: "start"
+behavior: "smooth",
+block: "start"
 })
+
 }else{
 
 result.innerHTML = `<div class="notfound">Tady zatím prohoz nikdo neposlal :(</div>`
+
 result.scrollIntoView({
-  behavior: "smooth",
-  block: "start"
+behavior: "smooth",
+block: "start"
 })
+
 }
 
 input.blur()
@@ -193,41 +250,12 @@ input.select()
 })
 
 </script>
+
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js?v=21")
+navigator.serviceWorker.register("sw.js?v=22")
 }
 </script>
+
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
