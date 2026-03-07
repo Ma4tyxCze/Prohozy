@@ -104,9 +104,9 @@ font-size:clamp(20px,4vw,26px);
 
 <div class="gvdBox">
 <select id="gvdSelect">
-<option value="432">GVD 432</option>
-<option value="433">GVD 433</option>
-<option value="434">GVD 434</option>
+<option value="432">Všední den 432</option>
+<option value="441">Sobota 441</option>
+<option value="451">Neděle 451</option>
 </select>
 </div>
 
@@ -194,7 +194,7 @@ return
 // směna neexistuje
 if(!shifts[value]){
 
-navigator.vibrate?.([80,80,80])
+navigator.vibrate?.([80,80])
 
 result.innerHTML = `<div class="notfound">Taková směna tu není :(</div>`
 
@@ -253,9 +253,10 @@ input.select()
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=22")
+navigator.serviceWorker.register("sw.js?v=23")
 }
 </script>
 
 </body>
 </html>
+
