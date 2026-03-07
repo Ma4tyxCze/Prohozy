@@ -92,7 +92,44 @@ margin-top:30px;
 color:#ff6b6b;
 font-size:clamp(20px,4vw,26px);
 }
+.popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+}
 
+.popupBox{
+background:#1b1b1b;
+padding:25px;
+border-radius:10px;
+width:90%;
+max-width:400px;
+}
+
+.popupBox input,
+.popupBox textarea{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:6px;
+}
+
+.popupBox button{
+background:#FFD400;
+border:none;
+padding:10px 16px;
+margin-top:10px;
+cursor:pointer;
+border-radius:6px;
+}
+  
 </style>
 </head>
 
@@ -109,7 +146,9 @@ font-size:clamp(20px,4vw,26px);
 <option value="451">Neděle 451</option>
 </select>
 </div>
-
+<button onclick="openPopup()" class="addBtn">
+Přidat prohoz
+</button>
 <h1>Vyhledání směny</h1>
 
 <input id="shiftInput" placeholder="číslo směny" inputmode="numeric" maxlength="3" autocomplete="off">
@@ -119,7 +158,46 @@ font-size:clamp(20px,4vw,26px);
 </div>
 
 <script>
+function openPopup(){
 
+document.getElementById("popup").style.display="flex"
+
+document.getElementById("formShift").value =
+document.getElementById("shiftInput").value
+
+}
+
+function closePopup(){
+
+document.getElementById("popup").style.display="none"
+
+}
+
+async function sendProhoz(){
+
+const smena =
+document.getElementById("formShift").value
+
+const text =
+document.getElementById("formText").value
+
+const gvd =
+document.getElementById("gvdSelect").value
+
+await fetch("https://script.google.com/macros/s/AKfycbwD3kmuWHWuRq2Su5rHvZaSqOFQuq55hj59fh363QI1eM2ML3sKz9Wh9Lb1kiJ-qLfCAg/exec",{
+method:"POST",
+body:JSON.stringify({
+smena:smena,
+text:text,
+gvd:gvd
+})
+})
+
+alert("Prohoz odeslán")
+
+closePopup()
+
+}
 const input = document.getElementById("shiftInput")
 const result = document.getElementById("result")
 const gvdSelect = document.getElementById("gvdSelect")
@@ -174,7 +252,18 @@ shifts[id].push(txt || "")
 gvdSelect.addEventListener("change", function(){
 
 selectedSheet = this.value
+
+// vymazání
+input.value = ""
+result.innerHTML = ""
+
+// načtení nových dat
 loadData()
+
+// automatický focus
+setTimeout(() => {
+input.focus()
+}, 100)
 
 })
 
@@ -241,8 +330,8 @@ input.blur()
 
 setTimeout(() => {
 input.focus()
-input.select()
-}, 1000)
+input.click()
+}, 100)
 
 }
 
@@ -254,11 +343,29 @@ input.select()
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=24")
+navigator.serviceWorker.register("sw.js?v=25")
 }
 </script>
+<div id="popup" class="popup">
 
+<div class="popupBox">
+
+<h2>Přidat prohoz</h2>
+
+<input id="formShift" placeholder="Směna">
+
+<textarea id="formText" placeholder="Text prohozu"></textarea>
+
+<button onclick="sendProhoz()">Odeslat</button>
+
+<button onclick="closePopup()">Zrušit</button>
+
+</div>
+
+</div>
+  
 </body>
 </html>
+
 
 
