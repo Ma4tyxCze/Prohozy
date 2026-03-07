@@ -156,7 +156,12 @@ display:none;
 justify-content:center;
 align-items:center;
 }
-
+.appTitle{
+color:#FFD400;
+font-size:clamp(32px,6vw,48px);
+margin-bottom:10px;
+}
+  
 .popupBox{
 background:#1b1b1b;
 padding:25px;
@@ -208,7 +213,7 @@ autocomplete="off">
 </div>
 
 <div class="container">
-
+<h1 class="appTitle">Prohozy</h1>
 <img src="icon.png" class="logo">
 
 <div class="gvdBox">
@@ -447,7 +452,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=28")
+navigator.serviceWorker.register("sw.js?v=29")
 }
 </script>
 
@@ -468,3 +473,4 @@ navigator.serviceWorker.register("sw.js?v=28")
 
 </body>
 </html>
+
