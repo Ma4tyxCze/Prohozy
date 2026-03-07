@@ -103,14 +103,25 @@ margin-bottom:20px;
 
 #gvdSelect{
 flex:1;
-background:#222;
-color:#FFD400;
-border:1px solid #444;
+background:#FFD400;
+color:black;
+border:none;
 padding:12px;
 font-size:16px;
 border-radius:8px;
-}
+font-weight:bold;
 
+appearance:none;
+-webkit-appearance:none;
+-moz-appearance:none;
+
+background-image:url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+background-repeat:no-repeat;
+background-position:right 10px center;
+background-size:20px;
+
+padding-right:35px;
+}
 h1{
 font-size:clamp(28px,5vw,40px);
 margin-bottom:30px;
@@ -213,9 +224,8 @@ autocomplete="off">
 </div>
 
 <div class="container">
-<h1 class="appTitle">Prohozy</h1>
 <img src="icon.png" class="logo">
-
+<h1 class="appTitle">Prohozy</h1>
 <div class="gvdBox">
 
 <select id="gvdSelect">
@@ -452,7 +462,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=29")
+navigator.serviceWorker.register("sw.js?v=30")
 }
 </script>
 
@@ -473,4 +483,5 @@ navigator.serviceWorker.register("sw.js?v=29")
 
 </body>
 </html>
+
 
