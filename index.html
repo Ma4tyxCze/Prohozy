@@ -35,6 +35,18 @@ margin-bottom:20px;
 color:#FFD400;
 }
 
+  .addBtn{
+flex:1;
+background:#FFD400;
+color:black;
+border:none;
+padding:12px;
+font-size:16px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+  
 .container{
 width:100%;
 max-width:700px;
@@ -45,18 +57,18 @@ margin-top:40px;
 .gvdBox{
 width:100%;
 display:flex;
-justify-content:center;
+gap:10px;
 margin-bottom:20px;
 }
 
 #gvdSelect{
+flex:1;
 background:#222;
 color:#FFD400;
 border:1px solid #444;
-padding:8px 14px;
+padding:12px;
 font-size:16px;
-border-radius:6px;
-margin-right:80px;
+border-radius:8px;
 }
 
 h1{
@@ -140,15 +152,18 @@ border-radius:6px;
 <img src="icon.png" class="logo">
 
 <div class="gvdBox">
+
 <select id="gvdSelect">
 <option value="432">Všední den 432</option>
 <option value="441">Sobota 441</option>
 <option value="451">Neděle 451</option>
 </select>
-</div>
+
 <button onclick="openPopup()" class="addBtn">
 Přidat prohoz
 </button>
+
+</div>
 <h1>Vyhledání směny</h1>
 
 <input id="shiftInput" placeholder="číslo směny" inputmode="numeric" maxlength="3" autocomplete="off">
@@ -343,7 +358,7 @@ input.select()
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=25")
+navigator.serviceWorker.register("sw.js?v=26")
 }
 </script>
 <div id="popup" class="popup">
@@ -366,6 +381,7 @@ navigator.serviceWorker.register("sw.js?v=25")
   
 </body>
 </html>
+
 
 
 
