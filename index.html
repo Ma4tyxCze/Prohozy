@@ -338,6 +338,7 @@ const gvd = document.getElementById("formGvd").value
 
 await fetch("https://script.google.com/macros/s/AKfycbz3x5cZkhzIB7n4qqVQ0MIJ0LFftol6hcCuI07W4TUZKll-KZvGK_InJAaiJ9SkTd3r5Q/exec",{
 method:"POST",
+mode:"no-cors",
 body:JSON.stringify({
 smena:smena,
 text:text,
@@ -479,7 +480,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=33")
+navigator.serviceWorker.register("sw.js?v=34")
 }
 </script>
 
@@ -507,6 +508,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
