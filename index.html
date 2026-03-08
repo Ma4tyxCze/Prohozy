@@ -188,7 +188,16 @@ border-radius:8px;
 min-height:120px;
 font-size:16px;
 }
-
+.popupBox select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border:none;
+border-radius:6px;
+background:#FFD400;
+color:black;
+font-weight:bold;
+}
 .popupBox input,
 .popupBox textarea{
 width:100%;
@@ -325,7 +334,7 @@ async function sendProhoz(){
 
 const smena = document.getElementById("formShift").value
 const text = document.getElementById("formText").value
-const gvd = document.getElementById("gvdSelect").value
+const gvd = document.getElementById("formGvd").value
 
 await fetch("https://script.google.com/macros/s/AKfycbwD3kmuWHWuRq2Su5rHvZaSqOFQuq55hj59fh363QI1eM2ML3sKz9Wh9Lb1kiJ-qLfCAg/exec",{
 method:"POST",
@@ -470,7 +479,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=31")
+navigator.serviceWorker.register("sw.js?v=32")
 }
 </script>
 
@@ -479,7 +488,11 @@ navigator.serviceWorker.register("sw.js?v=31")
 <div class="popupBox">
 
 <h2>Přidat prohoz</h2>
-
+<select id="formGvd">
+<option value="432">Všední den 432</option>
+<option value="441">Sobota 441</option>
+<option value="451">Neděle 451</option>
+</select>
 <input id="formShift"
 placeholder="Směna"
 inputmode="numeric"
@@ -494,6 +507,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
