@@ -336,7 +336,7 @@ const smena = document.getElementById("formShift").value
 const text = document.getElementById("formText").value
 const gvd = document.getElementById("formGvd").value
 
-await fetch("https://script.google.com/macros/s/AKfycbwD3kmuWHWuRq2Su5rHvZaSqOFQuq55hj59fh363QI1eM2ML3sKz9Wh9Lb1kiJ-qLfCAg/exec",{
+await fetch("https://script.google.com/macros/s/AKfycbz3x5cZkhzIB7n4qqVQ0MIJ0LFftol6hcCuI07W4TUZKll-KZvGK_InJAaiJ9SkTd3r5Q/exec",{
 method:"POST",
 body:JSON.stringify({
 smena:smena,
@@ -479,7 +479,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=32")
+navigator.serviceWorker.register("sw.js?v=33")
 }
 </script>
 
@@ -507,6 +507,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
