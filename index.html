@@ -332,6 +332,9 @@ document.getElementById("popup").style.display="none"
 
 async function sendProhoz(){
 
+const btn = document.getElementById("sendBtn")
+btn.disabled = true
+
 const smena = document.getElementById("formShift").value
 const text = document.getElementById("formText").value
 const gvd = document.getElementById("formGvd").value
@@ -347,7 +350,10 @@ gvd:gvd
 })
 
 alert("Prohoz odeslán")
+
 closePopup()
+
+btn.disabled=false
 
 }
 
@@ -480,7 +486,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=34")
+navigator.serviceWorker.register("sw.js?v=35")
 }
 </script>
 
@@ -500,7 +506,7 @@ inputmode="numeric"
 maxlength="3">
 <textarea id="formText" placeholder="Text prohozu"></textarea>
 
-<button onclick="sendProhoz()">Odeslat</button>
+<button id="sendBtn" onclick="sendProhoz()">Odeslat</button>
 <button onclick="closePopup()">Zrušit</button>
 
 </div>
@@ -508,6 +514,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
