@@ -221,7 +221,10 @@ border-radius:6px;
 
 <body>
 <script>
-  google.script.run.withSuccessHandler(function(res){
+
+window.addEventListener("load", function(){
+
+google.script.run.withSuccessHandler(function(res){
 
 console.log(res)
 
@@ -233,7 +236,10 @@ return
 document.getElementById("app").style.display="block"
 
 }).checkAccess()
-  </script>
+
+})
+
+</script>
 
 <div class="container" id="app" style="display:none;">
 <img src="icon.png" class="logo">
@@ -424,7 +430,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=40")
+navigator.serviceWorker.register("sw.js?v=41")
 }
 </script>
 
@@ -452,6 +458,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
