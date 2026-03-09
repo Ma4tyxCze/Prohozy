@@ -287,21 +287,11 @@ google.script.run
 .withSuccessHandler(function(){
 
 alert("Prohoz odeslán")
-
 closePopup()
-btn.disabled=false
+btn.disabled = false
 
 })
 .addProhoz(smena,text,gvd)
-
-}
-})
-
-alert("Prohoz odeslán")
-
-closePopup()
-
-btn.disabled=false
 
 }
 
@@ -434,7 +424,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=39")
+navigator.serviceWorker.register("sw.js?v=40")
 }
 </script>
 
@@ -462,6 +452,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
