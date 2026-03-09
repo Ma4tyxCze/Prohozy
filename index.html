@@ -223,14 +223,16 @@ border-radius:6px;
 <script>
   google.script.run.withSuccessHandler(function(res){
 
-  if(!res.access){
-    document.body.innerHTML = "Nemáte přístup do aplikace.";
-    return;
-  }
+console.log(res)
 
-  document.getElementById("app").style.display="block"
+if(!res.access){
+document.body.innerHTML="Nemáte přístup"
+return
+}
 
-}).checkAccess();
+document.getElementById("app").style.display="block"
+
+}).checkAccess()
   </script>
 
 <div class="container" id="app" style="display:none;">
@@ -432,7 +434,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=38")
+navigator.serviceWorker.register("sw.js?v=39")
 }
 </script>
 
@@ -460,6 +462,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
