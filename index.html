@@ -220,27 +220,20 @@ border-radius:6px;
 </head>
 
 <body>
+<script>
+  google.script.run.withSuccessHandler(function(res){
 
-<div id="lockScreen" class="lockScreen">
-<div class="lockBox">
+  if(!res.access){
+    document.body.innerHTML = "Nemáte přístup do aplikace.";
+    return;
+  }
 
-<h2>Zadej přístupový kód</h2>
+  document.getElementById("app").style.display="block"
 
-<input id="pinInput"
-type="password"
-inputmode="numeric"
-maxlength="6"
-placeholder="••••••"
-autocomplete="off">
+}).checkAccess();
+  </script>
 
-<button onclick="checkPin()">Odemknout</button>
-
-<div id="pinError" class="pinError"></div>
-
-</div>
-</div>
-
-<div class="container">
+<div class="container" id="app" style="display:none;">
 <img src="icon.png" class="logo">
 <h1 class="appTitle">Prohozy</h1>
 <div class="gvdBox">
@@ -266,57 +259,6 @@ Přidat prohoz
 </div>
 
 <script>
-
-const correctPin = "112200"
-
-// kontrola při načtení stránky
-window.addEventListener("load", () => {
-
-const saved = localStorage.getItem("prohozy_unlock")
-
-if(saved){
-
-const time = parseInt(saved)
-
-if(Date.now() - time < 86400000){
-document.getElementById("lockScreen").style.display="none"
-}else{
-setTimeout(()=>document.getElementById("pinInput").focus(),300)
-}
-
-}else{
-setTimeout(()=>document.getElementById("pinInput").focus(),300)
-}
-
-})
-
-// kontrola PINu
-function checkPin(){
-
-const pin = document.getElementById("pinInput").value
-
-if(pin === correctPin){
-
-localStorage.setItem("prohozy_unlock", Date.now())
-document.getElementById("lockScreen").style.display="none"
-
-}else{
-
-document.getElementById("pinError").innerText="Špatný kód"
-navigator.vibrate?.([100,100])
-document.getElementById("pinInput").value=""
-
-}
-
-}
-
-// automatická kontrola po 6 číslech
-document.getElementById("pinInput").addEventListener("input",function(){
-if(this.value.length === 6){
-checkPin()
-}
-})
-
 function openPopup(){
 
 document.getElementById("popup").style.display="flex"
@@ -330,7 +272,7 @@ function closePopup(){
 document.getElementById("popup").style.display="none"
 }
 
-async function sendProhoz(){
+function sendProhoz(){
 
 const btn = document.getElementById("sendBtn")
 btn.disabled = true
@@ -339,14 +281,18 @@ const smena = document.getElementById("formShift").value
 const text = document.getElementById("formText").value
 const gvd = document.getElementById("formGvd").value
 
-await fetch("https://script.google.com/macros/s/AKfycbyDUwnANS22ZGaCSQCZjoyQh-cpiXQdV2tjkLNKtJQIF5O35UdslE0jvhpKgERgTSxRhw/exec",{
-method:"POST",
-mode:"no-cors",
-body:JSON.stringify({
-smena:smena,
-text:text,
-gvd:gvd
+google.script.run
+.withSuccessHandler(function(){
+
+alert("Prohoz odeslán")
+
+closePopup()
+btn.disabled=false
+
 })
+.addProhoz(smena,text,gvd)
+
+}
 })
 
 alert("Prohoz odeslán")
@@ -486,7 +432,7 @@ input.addEventListener("focus",()=>{input.select()})
 
 <script>
 if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("sw.js?v=37")
+navigator.serviceWorker.register("sw.js?v=38")
 }
 </script>
 
@@ -514,6 +460,7 @@ maxlength="3">
 
 </body>
 </html>
+
 
 
 
