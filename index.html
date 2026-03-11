@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Prohozy</title>
+
 <style>
 body{
 font-family:Arial;
@@ -11,12 +12,19 @@ color:white;
 text-align:center;
 padding:40px;
 }
+
+h1{
+color:#FFD400;
+}
+
 input{
 padding:10px;
 font-size:18px;
+margin:10px;
 }
+
 button{
-padding:10px;
+padding:10px 15px;
 font-size:18px;
 }
 </style>
@@ -24,10 +32,15 @@ font-size:18px;
 
 <body>
 
-<h1 style="color:#FFD400">Prohozy</h1>
+<h1>Prohozy</h1>
 
 <input id="email" placeholder="email">
 <button onclick="login()">Login</button>
+
+<br><br>
+
+<input id="shift" placeholder="směna">
+<button onclick="find()">Najít</button>
 
 <div id="result"></div>
 
@@ -43,13 +56,38 @@ const data = await res.json()
 
 if(data.allowed){
 
-document.getElementById("result").innerHTML="Login OK"
+document.getElementById("result").innerHTML="Přihlášen ✔"
 
 }else{
 
 document.getElementById("result").innerHTML="Nemáte přístup"
 
 }
+
+}
+
+async function find(){
+
+let smena=document.getElementById("shift").value
+
+const res = await fetch("https://prohozy.sbs/api/find?gvd=432&smena="+smena)
+
+const data = await res.json()
+
+if(!data.found){
+
+document.getElementById("result").innerHTML="Nic nenalezeno"
+
+return
+}
+
+let html=""
+
+data.data.forEach(row=>{
+html += "<div>"+row[1]+"</div>"
+})
+
+document.getElementById("result").innerHTML=html
 
 }
 
