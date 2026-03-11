@@ -88,6 +88,12 @@ background:#FFD400;
 color:black;
 appearance:none;
 -webkit-appearance:none;
+
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+text-align-last:center;
 }
 
 .addBtn{
@@ -450,12 +456,17 @@ block:"center"
 
 async function sendProhoz(btn){
 
+const smena=document.getElementById("formShift").value.trim()
+const text=document.getElementById("formText").value.trim()
+const gvd=document.getElementById("formGvd").value
+
+if(smena=="" || text==""){
+alert("Vyplň směnu a text prohozu")
+return
+}
+
 btn.disabled=true
 btn.innerText="Odesílám..."
-
-const smena=document.getElementById("formShift").value
-const text=document.getElementById("formText").value
-const gvd=document.getElementById("formGvd").value
 
 await fetch("https://prohozy-api.marty-protiva.workers.dev/api/add",{
 
