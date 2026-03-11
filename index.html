@@ -314,7 +314,8 @@ style="width:100%;padding:12px;border-radius:10px"
 
 <button onclick="sendProhoz()">Odeslat</button>
 <button onclick="closePopup()">Zrušit</button>
-
+</div>
+  </div>
 <script>
 
 let userEmail = localStorage.getItem("prohozy_user")
@@ -482,12 +483,6 @@ btn.disabled=false
 btn.innerText="Odeslat"
 
 }
-alert("Prohoz odeslán")
-
-closePopup()
-
-}
-
 function openPopup(){
 document.getElementById("popup").style.display="flex"
 }
