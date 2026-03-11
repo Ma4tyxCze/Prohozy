@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="manifest" href="manifest.json">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Prohozy">
 
-<link rel="apple-touch-icon" href="https://i.imgur.com/LZsTnwU.png">
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
 <title>Prohozy</title>
 
+<link rel="manifest" href="manifest.json">
 <link rel="icon" href="https://i.imgur.com/LZsTnwU.png">
+<link rel="apple-touch-icon" href="https://i.imgur.com/LZsTnwU.png">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Prohozy">
 
 <style>
 
@@ -24,23 +26,49 @@ text-align:center;
 }
 
 .container{
-padding:20px;
-max-width:900px;
+max-width:800px;
 margin:auto;
+padding:20px;
 }
 
 .logo{
 width:100%;
-max-width:600px;
+max-width:420px;
 margin:auto;
 display:block;
-filter: drop-shadow(0 0 18px #FFD400);
+filter:drop-shadow(0 0 18px #FFD400);
 }
 
 .appTitle{
 color:#FFD400;
 font-size:56px;
+margin:20px 0;
+}
+
+.userBar{
+display:flex;
+gap:10px;
+justify-content:center;
+align-items:center;
 margin-bottom:20px;
+}
+
+.userBox{
+background:#1b1b1b;
+border:1px solid #444;
+padding:10px 16px;
+border-radius:12px;
+white-space:nowrap;
+}
+
+button{
+background:#FFD400;
+color:black;
+border:none;
+padding:10px 18px;
+font-weight:bold;
+border-radius:10px;
+cursor:pointer;
 }
 
 .topBar{
@@ -54,60 +82,59 @@ margin-bottom:25px;
 flex:1;
 height:60px;
 font-size:20px;
-border-radius:16px;
-padding:0 16px;
-}
-  #gvdSelect{
-background:#FFD400;
-color:black;
-border:none;
-appearance:none;
--webkit-appearance:none;
-}
-.addBtn{
-flex:1;
-width:50%;
-background:#FFD400;
-color:black;
-border:none;
-padding:18px;
-font-size:20px;
-border-radius:12px;
 font-weight:bold;
-cursor:pointer;
-height:60px;
+border-radius:14px;
+border:none;
+}
+
+#gvdSelect{
+background:#FFD400;
+color:black;
+appearance:none;
+}
+
+.addBtn{
 display:flex;
 align-items:center;
 justify-content:center;
 }
-input{
-width:100%;
-max-width:400px;
-padding:18px;
-font-size:22px;
-text-align:center;
-border-radius:14px;
+
+#shiftInput{
+width:140px;
+font-size:36px;
+padding:12px;
+border-radius:12px;
 border:none;
+text-align:center;
 margin:20px auto;
+display:block;
+}
+
+#loginEmail{
+width:260px;
+padding:12px;
+font-size:18px;
+border-radius:12px;
+border:none;
+margin:10px auto;
 display:block;
 }
 
 .box{
 border:1px solid #444;
-padding:18px;
-margin:15px 0;
+padding:16px;
+margin:12px 0;
 border-radius:12px;
 background:#1b1b1b;
-font-size:20px;
-line-height:1.4;
-min-height:70px;
+font-size:18px;
+min-height:60px;
 display:flex;
 align-items:center;
 }
 
 .notfound{
 color:#ff6b6b;
-margin-top:20px;
+margin-top:10px;
 }
 
 .popup{
@@ -124,58 +151,33 @@ align-items:center;
 
 .popupBox{
 background:#1b1b1b;
-width:90%;
-max-width:500px;
 padding:30px;
+width:90%;
+max-width:420px;
 }
 
 textarea{
 width:100%;
-min-height:120px;
-font-size:20px;
+min-height:100px;
 padding:10px;
-}
-
-button{
-background:#FFD400;
-color:black;
+font-size:16px;
+border-radius:10px;
 border:none;
-padding:12px 20px;
-font-weight:bold;
-border-radius:8px;
-cursor:pointer;
-margin-top:10px;
 }
 
 #loginScreen{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
 background:#111;
-}
-
-.userBar{
 display:flex;
-gap:10px;
-margin-bottom:20px;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-wrap:nowrap;
 }
-.userBox{
-background:#1b1b1b;
-border:1px solid #444;
-padding:12px 18px;
-border-radius:12px;
-font-size:14px;
-white-space:nowrap;
-}
+
 #installBanner{
 position:fixed;
 bottom:20px;
@@ -183,14 +185,12 @@ left:50%;
 transform:translateX(-50%);
 background:#FFD400;
 color:black;
-padding:14px 18px;
+padding:12px 18px;
 border-radius:12px;
 font-weight:bold;
-font-size:14px;
-z-index:9999;
 display:none;
-box-shadow:0 0 15px rgba(0,0,0,0.5);
 }
+
 #splash{
 position:fixed;
 top:0;
@@ -205,42 +205,33 @@ z-index:9999;
 }
 
 #splashLogo{
-width:180px;
-filter: drop-shadow(0 0 25px #FFD400);
-animation:logoPulse 1.6s infinite;
+width:160px;
+filter:drop-shadow(0 0 20px #FFD400);
+animation:pulse 1.6s infinite;
 }
 
-@keyframes logoPulse{
-0%{
-transform:scale(0.95);
-opacity:0.7;
-filter: drop-shadow(0 0 10px #FFD400);
+@keyframes pulse{
+0%{transform:scale(.95)}
+50%{transform:scale(1)}
+100%{transform:scale(.95)}
 }
-50%{
-transform:scale(1);
-opacity:1;
-filter: drop-shadow(0 0 30px #FFD400);
-}
-100%{
-transform:scale(0.95);
-opacity:0.7;
-filter: drop-shadow(0 0 10px #FFD400);
-}
-}  
+
 </style>
 </head>
 
 <body>
+
 <div id="splash">
-  <img src="https://i.imgur.com/uHurObD.png" id="splashLogo">
+<img src="https://i.imgur.com/uHurObD.png" id="splashLogo">
 </div>
-  <div id="installBanner">
-Přidej <b>Prohozy</b> na plochu 📱<br>
-Klikni <b>Sdílet</b> → <b>Přidat na plochu</b>
+
+<div id="installBanner">
+Přidej Prohozy na plochu 📱
 </div>
+
 <div id="loginScreen">
 
-<h2>Zadej email:</h2>
+<h2>Zadej email</h2>
 
 <input id="loginEmail" placeholder="email">
 
@@ -267,22 +258,13 @@ Klikni <b>Sdílet</b> → <b>Přidat na plochu</b>
 <option value="451">Neděle 451</option>
 </select>
 
-<button onclick="openPopup()" class="addBtn">
-Přidat prohoz
-</button>
+<button class="addBtn" onclick="openPopup()">Přidat prohoz</button>
 
 </div>
 
 <h2>Vyhledání směny</h2>
 
-<input 
-id="shiftInput"
-placeholder="číslo směny"
-maxlength="3"
-inputmode="numeric"
-pattern="[0-9]*"
-autocomplete="off"
->
+<input id="shiftInput" maxlength="3" inputmode="numeric" placeholder="000">
 
 <div id="result"></div>
 
@@ -314,7 +296,6 @@ autocomplete="off"
 <script>
 
 let userEmail = localStorage.getItem("prohozy_user")
-let shifts=[]
 let selectedSheet="432"
 
 const input=document.getElementById("shiftInput")
@@ -340,18 +321,17 @@ function startApp(){
 document.getElementById("loginScreen").style.display="none"
 document.querySelector(".container").style.display="block"
 
-document.getElementById("userInfo").innerText=
-"Přihlášen: "+userEmail
-setTimeout(()=>{
-input.focus()
-},300)
-showInstallBanner()
-  document.getElementById("installBanner").onclick = function(){
+document.getElementById("userInfo").innerText="Přihlášen: "+userEmail
 
+setTimeout(()=>{input.focus()},300)
+
+showInstallBanner()
+
+document.getElementById("installBanner").onclick=function(){
 this.style.display="none"
 localStorage.setItem("prohozy_install_hint","1")
-
 }
+
 }
 
 async function login(){
@@ -365,9 +345,7 @@ const data=await res.json()
 if(data.allowed){
 
 localStorage.setItem("prohozy_user",email)
-
 userEmail=email
-
 startApp()
 
 }else{
@@ -388,15 +366,17 @@ result.innerHTML=""
 
 input.addEventListener("input",function(){
 
-this.value = this.value.replace(/[^0-9]/g,'')
+this.value=this.value.replace(/[^0-9]/g,'')
 
-let value=this.value.trim()
+let value=this.value
 
 if(value.length!==3){
 result.innerHTML=""
 return
 }
-this.blur()   // ← zavře klávesnici
+
+this.blur()
+
 findShift(value)
 
 })
@@ -409,7 +389,7 @@ const data=await res.json()
 
 if(!data.found){
 
-result.innerHTML="<div class='notfound'>Tady zatím prohoz nikdo neposlal :(</div>"
+result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
 return
 
 }
@@ -418,19 +398,18 @@ let html=""
 
 data.data.forEach(row=>{
 
-html+="<div class='box' onclick='copyText(this)'>"+row[1]+"</div>"
+let text=row[1] || "Tady zatím nikdo nic nepřidal"
+
+html+="<div class='box' onclick='copyText(this)'>"+text+"</div>"
 
 })
 
 result.innerHTML=html
 
-const firstBox = result.querySelector(".box")
+const firstBox=result.querySelector(".box")
 
 if(firstBox){
-firstBox.scrollIntoView({
-behavior:"smooth",
-block:"center"
-})
+firstBox.scrollIntoView({behavior:"smooth",block:"center"})
 }
 
 }
@@ -444,11 +423,7 @@ const gvd=document.getElementById("formGvd").value
 await fetch("https://prohozy-api.marty-protiva.workers.dev/api/add",{
 
 method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
+headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
 gvd:gvd,
 smena:smena,
@@ -462,6 +437,14 @@ alert("Prohoz odeslán")
 
 closePopup()
 
+}
+
+function openPopup(){
+document.getElementById("popup").style.display="flex"
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none"
 }
 
 function copyText(el){
@@ -478,47 +461,38 @@ localStorage.removeItem("prohozy_user")
 location.reload()
 
 }
-function isStandalone(){
-return window.matchMedia('(display-mode: standalone)').matches
-|| window.navigator.standalone
-}
 
 function showInstallBanner(){
 
-if(!isStandalone()){
+if(!window.matchMedia('(display-mode: standalone)').matches){
 
 if(!localStorage.getItem("prohozy_install_hint")){
 
-setTimeout(function(){
-
+setTimeout(()=>{
 document.getElementById("installBanner").style.display="block"
-
 },2000)
 
-localStorage.setItem("prohozy_install_hint","1")
-
 }
 
 }
 
 }
 
-  window.addEventListener("load", function(){
+window.addEventListener("load",function(){
 
-const splash = document.getElementById("splash")
+const splash=document.getElementById("splash")
 
-setTimeout(function(){
+setTimeout(()=>{
 
 splash.style.opacity="0"
-splash.style.transition="opacity 0.6s"
+splash.style.transition="opacity .6s"
 
-setTimeout(function(){
-splash.remove()
-},600)
+setTimeout(()=>{splash.remove()},600)
 
 },700)
 
 })
+
 </script>
 
 </body>
