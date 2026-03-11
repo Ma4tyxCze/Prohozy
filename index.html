@@ -77,7 +77,19 @@ gap:12px;
 margin-bottom:25px;
 }
 
-#gvdSelect,
+#gvdSelect{
+flex:2;
+height:60px;
+font-size:20px;
+font-weight:bold;
+border-radius:14px;
+border:none;
+background:#FFD400;
+color:black;
+appearance:none;
+-webkit-appearance:none;
+}
+
 .addBtn{
 flex:1;
 height:60px;
@@ -85,18 +97,12 @@ font-size:20px;
 font-weight:bold;
 border-radius:14px;
 border:none;
-}
-
-#gvdSelect{
 background:#FFD400;
 color:black;
-appearance:none;
-}
-
-.addBtn{
 display:flex;
 align-items:center;
 justify-content:center;
+cursor:pointer;
 }
 
 #shiftInput{
@@ -398,11 +404,23 @@ let html=""
 
 data.data.forEach(row=>{
 
-let text=row[1] || "Tady zatím nikdo nic nepřidal"
+let valid=false
 
+data.data.forEach(row=>{
+
+let text=row[1]
+
+if(text && text.trim()!==""){
+valid=true
 html+="<div class='box' onclick='copyText(this)'>"+text+"</div>"
+}
 
 })
+
+if(!valid){
+result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
+return
+}
 
 result.innerHTML=html
 
