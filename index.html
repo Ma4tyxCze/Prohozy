@@ -389,30 +389,25 @@ findShift(value)
 
 async function findShift(smena){
 
-const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/find?gvd="+selectedSheet+"&smena="+smena)
+const res = await fetch("https://prohozy-api.marty-protiva.workers.dev/api/find?gvd="+selectedSheet+"&smena="+smena)
 
-const data=await res.json()
+const data = await res.json()
 
 if(!data.found){
-
 result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
 return
-
 }
 
 let html=""
-
-data.data.forEach(row=>{
-
 let valid=false
 
 data.data.forEach(row=>{
 
-let text=row[1]
+let text = row[1]
 
 if(text && text.trim()!==""){
 valid=true
-html+="<div class='box' onclick='copyText(this)'>"+text+"</div>"
+html += "<div class='box' onclick='copyText(this)'>"+text+"</div>"
 }
 
 })
@@ -422,12 +417,15 @@ result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
 return
 }
 
-result.innerHTML=html
+result.innerHTML = html
 
-const firstBox=result.querySelector(".box")
+const firstBox = result.querySelector(".box")
 
 if(firstBox){
-firstBox.scrollIntoView({behavior:"smooth",block:"center"})
+firstBox.scrollIntoView({
+behavior:"smooth",
+block:"center"
+})
 }
 
 }
