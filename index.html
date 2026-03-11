@@ -160,6 +160,7 @@ background:#1b1b1b;
 padding:30px;
 width:90%;
 max-width:420px;
+border-radius:16px;
 }
 
 textarea{
@@ -169,6 +170,7 @@ padding:10px;
 font-size:16px;
 border-radius:10px;
 border:none;
+margin-top:10px;
 }
 
 #loginScreen{
@@ -282,40 +284,22 @@ Přidej Prohozy na plochu 📱
 
 <h2>Přidat prohoz</h2>
 
-<div style="margin-bottom:12px">
-
 <select id="formGvd" style="width:100%;padding:12px;border-radius:10px">
-
 <option value="432">Všední den 432</option>
 <option value="441">Sobota 441</option>
 <option value="451">Neděle 451</option>
-
 </select>
 
-</div>
+<input id="formShift" placeholder="Směna" maxlength="3" inputmode="numeric" style="width:100%;padding:12px;border-radius:10px;margin-top:10px">
 
-<div style="margin-bottom:12px">
+<textarea id="formText" placeholder="Text prohozu"></textarea>
 
-<input 
-id="formShift"
-placeholder="Směna"
-style="width:100%;padding:12px;border-radius:10px"
-maxlength="3"
-inputmode="numeric"
->
-
-</div>
-
-<textarea 
-id="formText"
-placeholder="Text prohozu"
-style="width:100%;padding:12px;border-radius:10px"
-></textarea>
-
-<button onclick="sendProhoz()">Odeslat</button>
+<button onclick="sendProhoz(this)">Odeslat</button>
 <button onclick="closePopup()">Zrušit</button>
+
 </div>
-  </div>
+</div>
+
 <script>
 
 let userEmail = localStorage.getItem("prohozy_user")
@@ -325,7 +309,26 @@ const input=document.getElementById("shiftInput")
 const result=document.getElementById("result")
 const gvdSelect=document.getElementById("gvdSelect")
 
+function hideSplash(){
+
+const splash=document.getElementById("splash")
+
+setTimeout(()=>{
+
+splash.style.opacity="0"
+splash.style.transition="opacity .6s"
+
+setTimeout(()=>{
+if(splash) splash.remove()
+},600)
+
+},700)
+
+}
+
 window.onload=function(){
+
+hideSplash()
 
 if(!userEmail){
 
@@ -362,7 +365,6 @@ async function login(){
 let email=document.getElementById("loginEmail").value.trim().toLowerCase()
 
 const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+email)
-
 const data=await res.json()
 
 if(data.allowed){
@@ -407,7 +409,6 @@ findShift(value)
 async function findShift(smena){
 
 const res = await fetch("https://prohozy-api.marty-protiva.workers.dev/api/find?gvd="+selectedSheet+"&smena="+smena)
-
 const data = await res.json()
 
 if(!data.found){
@@ -420,11 +421,11 @@ let valid=false
 
 data.data.forEach(row=>{
 
-let text = row[1]
+let text=row[1]
 
 if(text && text.trim()!==""){
 valid=true
-html += "<div class='box' onclick='copyText(this)'>"+text+"</div>"
+html+="<div class='box' onclick='copyText(this)'>"+text+"</div>"
 }
 
 })
@@ -434,9 +435,9 @@ result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
 return
 }
 
-result.innerHTML = html
+result.innerHTML=html
 
-const firstBox = result.querySelector(".box")
+const firstBox=result.querySelector(".box")
 
 if(firstBox){
 firstBox.scrollIntoView({
@@ -447,12 +448,10 @@ block:"center"
 
 }
 
-async function sendProhoz(){
+async function sendProhoz(btn){
 
-const btn = event.target
-
-btn.disabled = true
-btn.innerText = "Odesílám..."
+btn.disabled=true
+btn.innerText="Odesílám..."
 
 const smena=document.getElementById("formShift").value
 const text=document.getElementById("formText").value
@@ -483,8 +482,10 @@ btn.disabled=false
 btn.innerText="Odeslat"
 
 }
+
 function openPopup(){
 document.getElementById("popup").style.display="flex"
+document.getElementById("formShift").value=input.value
 }
 
 function closePopup(){
@@ -522,20 +523,10 @@ document.getElementById("installBanner").style.display="block"
 
 }
 
-window.addEventListener("load",function(){
-
-const splash=document.getElementById("splash")
-
 setTimeout(()=>{
-
-splash.style.opacity="0"
-splash.style.transition="opacity .6s"
-
-setTimeout(()=>{splash.remove()},600)
-
-},700)
-
-})
+const splash=document.getElementById("splash")
+if(splash) splash.remove()
+},3000)
 
 </script>
 
