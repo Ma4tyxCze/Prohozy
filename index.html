@@ -91,6 +91,10 @@ margin:15px 0;
 border-radius:12px;
 background:#1b1b1b;
 font-size:20px;
+line-height:1.4;
+min-height:70px;
+display:flex;
+align-items:center;
 }
 
 .notfound{
@@ -334,6 +338,12 @@ setTimeout(()=>{
 input.focus()
 },300)
 showInstallBanner()
+  document.getElementById("installBanner").onclick = function(){
+
+this.style.display="none"
+localStorage.setItem("prohozy_install_hint","1")
+
+}
 }
 
 async function login(){
@@ -370,17 +380,15 @@ result.innerHTML=""
 
 input.addEventListener("input",function(){
 
+this.value = this.value.replace(/[^0-9]/g,'')
+
 let value=this.value.trim()
 
 if(value.length!==3){
 result.innerHTML=""
 return
 }
-input.addEventListener("input",function(){
 
-this.value = this.value.replace(/[^0-9]/g,'')
-
-})
 findShift(value)
 
 })
