@@ -47,13 +47,22 @@ margin-bottom:20px;
 display:flex;
 gap:12px;
 margin-bottom:25px;
-flex-wrap:wrap;
 }
 
 #gvdSelect,
 .addBtn{
-flex:1 1 48%;
+flex:1;
 height:60px;
+font-size:20px;
+border-radius:16px;
+padding:0 16px;
+}
+  #gvdSelect{
+background:#FFD400;
+color:black;
+border:none;
+appearance:none;
+-webkit-appearance:none;
 }
 .addBtn{
 flex:1;
@@ -154,9 +163,10 @@ background:#111;
 .userBar{
 display:flex;
 gap:10px;
-margin-bottom:15px;
+margin-bottom:20px;
 justify-content:center;
 align-items:center;
+flex-wrap:nowrap;
 }
 .userBox{
 background:#1b1b1b;
@@ -164,8 +174,6 @@ border:1px solid #444;
 padding:12px 18px;
 border-radius:12px;
 font-size:14px;
-display:flex;
-align-items:center;
 white-space:nowrap;
 }
 #installBanner{
@@ -388,7 +396,7 @@ if(value.length!==3){
 result.innerHTML=""
 return
 }
-
+this.blur()   // ← zavře klávesnici
 findShift(value)
 
 })
@@ -416,13 +424,14 @@ html+="<div class='box' onclick='copyText(this)'>"+row[1]+"</div>"
 
 result.innerHTML=html
 
-// ⬇️ TADY přidej scroll na výsledky
-setTimeout(()=>{
-result.scrollIntoView({
+const firstBox = result.querySelector(".box")
+
+if(firstBox){
+firstBox.scrollIntoView({
 behavior:"smooth",
-block:"start"
+block:"center"
 })
-},100)
+}
 
 }
 
