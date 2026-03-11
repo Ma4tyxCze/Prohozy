@@ -282,22 +282,38 @@ Přidej Prohozy na plochu 📱
 
 <h2>Přidat prohoz</h2>
 
-<select id="formGvd">
+<div style="margin-bottom:12px">
+
+<select id="formGvd" style="width:100%;padding:12px;border-radius:10px">
+
 <option value="432">Všední den 432</option>
 <option value="441">Sobota 441</option>
 <option value="451">Neděle 451</option>
+
 </select>
 
-<input id="formShift" placeholder="Směna">
+</div>
 
-<textarea id="formText" placeholder="Text prohozu"></textarea>
+<div style="margin-bottom:12px">
+
+<input 
+id="formShift"
+placeholder="Směna"
+style="width:100%;padding:12px;border-radius:10px"
+maxlength="3"
+inputmode="numeric"
+>
+
+</div>
+
+<textarea 
+id="formText"
+placeholder="Text prohozu"
+style="width:100%;padding:12px;border-radius:10px"
+></textarea>
 
 <button onclick="sendProhoz()">Odeslat</button>
 <button onclick="closePopup()">Zrušit</button>
-
-</div>
-
-</div>
 
 <script>
 
@@ -432,6 +448,11 @@ block:"center"
 
 async function sendProhoz(){
 
+const btn = event.target
+
+btn.disabled = true
+btn.innerText = "Odesílám..."
+
 const smena=document.getElementById("formShift").value
 const text=document.getElementById("formText").value
 const gvd=document.getElementById("formGvd").value
@@ -439,7 +460,11 @@ const gvd=document.getElementById("formGvd").value
 await fetch("https://prohozy-api.marty-protiva.workers.dev/api/add",{
 
 method:"POST",
-headers:{"Content-Type":"application/json"},
+
+headers:{
+"Content-Type":"application/json"
+},
+
 body:JSON.stringify({
 gvd:gvd,
 smena:smena,
@@ -449,6 +474,14 @@ email:userEmail
 
 })
 
+alert("Prohoz odeslán")
+
+closePopup()
+
+btn.disabled=false
+btn.innerText="Odeslat"
+
+}
 alert("Prohoz odeslán")
 
 closePopup()
