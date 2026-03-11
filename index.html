@@ -47,18 +47,12 @@ margin-bottom:20px;
 display:flex;
 gap:12px;
 margin-bottom:25px;
+flex-wrap:wrap;
 }
 
-#gvdSelect{
-flex:1;
-width:50%;
-background:#FFD400;
-color:black;
-border:none;
-padding:18px;
-font-size:20px;
-border-radius:12px;
-font-weight:bold;
+#gvdSelect,
+.addBtn{
+flex:1 1 48%;
 height:60px;
 }
 .addBtn{
@@ -79,12 +73,14 @@ justify-content:center;
 }
 input{
 width:100%;
-padding:20px;
-font-size:40px;
+max-width:400px;
+padding:18px;
+font-size:22px;
 text-align:center;
 border-radius:14px;
 border:none;
-margin:30px 0;
+margin:20px auto;
+display:block;
 }
 
 .box{
@@ -420,17 +416,13 @@ html+="<div class='box' onclick='copyText(this)'>"+row[1]+"</div>"
 
 result.innerHTML=html
 
-}
-
-function openPopup(){
-
-document.getElementById("popup").style.display="flex"
-
-}
-
-function closePopup(){
-
-document.getElementById("popup").style.display="none"
+// ⬇️ TADY přidej scroll na výsledky
+setTimeout(()=>{
+result.scrollIntoView({
+behavior:"smooth",
+block:"start"
+})
+},100)
 
 }
 
