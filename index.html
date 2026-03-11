@@ -50,7 +50,7 @@ async function login(){
 
 let email=document.getElementById("email").value
 
-const res = await fetch("https://prohozy.sbs/api/check?email="+email)
+const res = await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+email)
 
 const data = await res.json()
 
@@ -70,7 +70,7 @@ async function find(){
 
 let smena=document.getElementById("shift").value
 
-const res = await fetch("https://prohozy.sbs/api/find?gvd=432&smena="+smena)
+const res = await fetch("https://prohozy-api.marty-protiva.workers.dev/api/find?gvd=432&smena="+smena)
 
 const data = await res.json()
 
