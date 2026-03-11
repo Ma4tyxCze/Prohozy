@@ -50,6 +50,7 @@ padding:18px;
 font-size:20px;
 border-radius:12px;
 font-weight:bold;
+height:60px;
 }
 
 .addBtn{
@@ -62,8 +63,11 @@ font-size:20px;
 border-radius:12px;
 font-weight:bold;
 cursor:pointer;
+height:60px;
+display:flex;
+align-items:center;
+justify-content:center;
 }
-
 input{
 width:100%;
 padding:20px;
@@ -142,17 +146,18 @@ background:#111;
 display:flex;
 gap:10px;
 margin-bottom:15px;
+justify-content:center;
 }
-
 .userBox{
-flex:1;
 background:#1b1b1b;
 border:1px solid #444;
-padding:12px 14px;
+padding:12px 18px;
 border-radius:12px;
 font-size:14px;
+display:flex;
+align-items:center;
+width:auto;
 }
-
 </style>
 </head>
 
@@ -195,7 +200,14 @@ Přidat prohoz
 
 <h2>Vyhledání směny</h2>
 
-<input id="shiftInput" placeholder="číslo směny" maxlength="3">
+<input 
+id="shiftInput"
+placeholder="číslo směny"
+maxlength="3"
+inputmode="numeric"
+pattern="[0-9]*"
+autocomplete="off"
+>
 
 <div id="result"></div>
 
@@ -255,7 +267,9 @@ document.querySelector(".container").style.display="block"
 
 document.getElementById("userInfo").innerText=
 "Přihlášen: "+userEmail
-
+setTimeout(()=>{
+input.focus()
+},300)
 }
 
 async function login(){
@@ -298,7 +312,11 @@ if(value.length!==3){
 result.innerHTML=""
 return
 }
+input.addEventListener("input",function(){
 
+this.value = this.value.replace(/[^0-9]/g,'')
+
+})
 findShift(value)
 
 })
