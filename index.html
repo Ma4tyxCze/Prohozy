@@ -332,7 +332,7 @@ if(splash) splash.remove()
 
 }
 
-window.onload=function(){
+window.onload=async function(){
 
 hideSplash()
 
@@ -340,6 +340,20 @@ if(!userEmail){
 
 document.getElementById("loginScreen").style.display="flex"
 document.querySelector(".container").style.display="none"
+return
+
+}
+
+const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+userEmail)
+const data=await res.json()
+
+if(!data.allowed){
+
+localStorage.removeItem("prohozy_user")
+
+document.getElementById("loginScreen").style.display="flex"
+document.querySelector(".container").style.display="none"
+
 return
 
 }
