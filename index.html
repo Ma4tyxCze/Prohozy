@@ -508,17 +508,26 @@ email:userEmail
 alert("Prohoz odeslán")
 
 closePopup()
-
+// vyčištění formuláře
+document.getElementById("formShift").value=""
+document.getElementById("formText").value=""
+document.getElementById("formGvd").value=selectedSheet
 btn.disabled=false
 btn.innerText="Odeslat"
 
 }
 
 function openPopup(){
-document.getElementById("popup").style.display="flex"
-document.getElementById("formShift").value=input.value
-}
 
+document.getElementById("popup").style.display="flex"
+
+// nastaví GVD podle hlavního výběru
+document.getElementById("formGvd").value = selectedSheet
+
+// předvyplní směnu
+document.getElementById("formShift").value = input.value
+
+}
 function closePopup(){
 document.getElementById("popup").style.display="none"
 }
