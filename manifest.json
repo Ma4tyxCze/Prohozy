@@ -1,20 +1,25 @@
 {
-"name": "Prohozy",
-"short_name": "Prohozy",
-"display": "standalone",
-"start_url": ".",
-"background_color": "#000000",
-"theme_color": "#111111",
-"icons": [
-{
-"src": "https://i.imgur.com/LZsTnwU.png",
-"sizes": "192x192",
-"type": "image/png"
-},
-{
-"src": "https://i.imgur.com/LZsTnwU.png",
-"sizes": "512x512",
-"type": "image/png"
-}
-]
+  "name": "Prohozy",
+  "short_name": "Prohozy",
+  "display": "standalone",
+  "start_url": ".",
+  "background_color": "#000000",
+  "theme_color": "#111111",
+  "icons": [
+    {
+      "src": "/Prohozy/icons/icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Prohozy/icons/icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/Prohozy/icons/icon_180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
 }
