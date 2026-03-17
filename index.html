@@ -53,9 +53,17 @@ text-align:center;
   height:200px;
   border-radius:50%;
   overflow:hidden;
-  background:url("/Prohozy/icons/uvod.png") center/155% no-repeat;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
   box-shadow:0 0 50px rgba(255,180,0,0.7);
   animation:pulse 1.6s infinite;
+}
+
+#splashImg{
+  width:155%;
+  transform:translateY(20px);
 }
 
 @keyframes pulse{
