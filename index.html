@@ -12,7 +12,6 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/Prohozy/icons/icon_32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/Prohozy/icons/icon_16.png">
 
-<!-- iOS -->
 <link rel="apple-touch-icon" sizes="180x180" href="/Prohozy/icons/icon_ios_180v2.png?v=5">
 
 <meta name="theme-color" content="#111111">
@@ -29,6 +28,51 @@ color:white;
 margin:0;
 text-align:center;
 }
+
+/* SPLASH */
+
+#iosFix{
+  position:fixed;
+  inset:0;
+  background:#111;
+  z-index:9997;
+}
+
+#splash{
+  position:fixed;
+  inset:0;
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+#splashCircle{
+  width:200px;
+  height:200px;
+  border-radius:50%;
+  background:url("/Prohozy/icons/uvod.png") center/cover no-repeat;
+  box-shadow:0 0 50px rgba(255,180,0,0.7);
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(.95)}
+  50%{transform:scale(1)}
+  100%{transform:scale(.95)}
+}
+
+@keyframes splashOut{
+  0%{transform:scale(1); opacity:1;}
+  100%{transform:scale(2.4); opacity:0;}
+}
+
+.splash-hide #splashCircle{
+  animation:splashOut .6s ease forwards;
+}
+
+/* APP */
 
 .container{
 max-width:800px;
@@ -91,14 +135,7 @@ border-radius:14px;
 border:none;
 background:#FFD400;
 color:black;
-appearance:none;
--webkit-appearance:none;
-
-display:flex;
-align-items:center;
-justify-content:center;
 text-align:center;
-text-align-last:center;
 }
 
 .addBtn{
@@ -107,7 +144,6 @@ height:60px;
 font-size:20px;
 font-weight:bold;
 border-radius:14px;
-border:none;
 background:#FFD400;
 color:black;
 display:flex;
@@ -144,22 +180,13 @@ margin:12px 0;
 border-radius:12px;
 background:#1b1b1b;
 font-size:18px;
-min-height:60px;
 display:flex;
 align-items:center;
 }
 
-.notfound{
-color:#ff6b6b;
-margin-top:10px;
-}
-
 .popup{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 background:rgba(0,0,0,0.8);
 display:none;
 justify-content:center;
@@ -178,18 +205,13 @@ textarea{
 width:100%;
 min-height:100px;
 padding:10px;
-font-size:16px;
 border-radius:10px;
 border:none;
-margin-top:10px;
 }
 
 #loginScreen{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 background:#111;
 display:flex;
 flex-direction:column;
@@ -210,30 +232,23 @@ font-weight:bold;
 display:none;
 }
 
-#iosFix{
-  position:fixed;
-  inset:0;
-  background:#111;
-  z-index:9997; /* menší než splash */
-}
 </style>
 </head>
 
 <body>
+
 <div id="iosFix"></div>
 
-<div id="installBanner">
-Přidej Prohozy na plochu 📱
+<div id="splash">
+  <div id="splashCircle"></div>
 </div>
 
+<div id="installBanner">Přidej Prohozy na plochu 📱</div>
+
 <div id="loginScreen">
-
 <h2>Zadej email</h2>
-
 <input id="loginEmail" placeholder="email">
-
 <button onclick="login()">Pokračovat</button>
-
 </div>
 
 <div class="container">
@@ -248,7 +263,6 @@ Přidej Prohozy na plochu 📱
 </div>
 
 <div class="topBar">
-
 <select id="gvdSelect">
 <option value="432">Všední den 432</option>
 <option value="441">Sobota 441</option>
@@ -259,24 +273,19 @@ Přidej Prohozy na plochu 📱
 </select>
 
 <button class="addBtn" onclick="openPopup()">Přidat prohoz</button>
-
 </div>
 
 <h2>Vyhledání směny</h2>
-
 <input id="shiftInput" maxlength="3" inputmode="numeric" placeholder="000">
-
 <div id="result"></div>
 
 </div>
 
 <div id="popup" class="popup">
-
 <div class="popupBox">
-
 <h2>Přidat prohoz</h2>
 
-<select id="formGvd" style="width:100%;padding:12px;border-radius:10px">
+<select id="formGvd">
 <option value="432">Všední den 432</option>
 <option value="441">Sobota 441</option>
 <option value="451">Neděle 451</option>
@@ -285,9 +294,8 @@ Přidej Prohozy na plochu 📱
 <option value="45">Neděle 45</option>
 </select>
 
-<input id="formShift" placeholder="Směna" maxlength="3" inputmode="numeric" style="width:100%;padding:12px;border-radius:10px;margin-top:10px">
-
-<textarea id="formText" placeholder="Text prohozu"></textarea>
+<input id="formShift" placeholder="Směna">
+<textarea id="formText"></textarea>
 
 <button onclick="sendProhoz(this)">Odeslat</button>
 <button onclick="closePopup()">Zrušit</button>
@@ -300,292 +308,67 @@ Přidej Prohozy na plochu 📱
 let userEmail = localStorage.getItem("prohozy_user")
 let selectedSheet="432"
 
-const input=document.getElementById("shiftInput")
-const result=document.getElementById("result")
-const gvdSelect=document.getElementById("gvdSelect")
-
 function hideSplash(){
-
-  const splash = document.getElementById("splash")
-
-  // spustí scale-out animaci
   document.body.classList.add("splash-hide")
-
   setTimeout(()=>{
-    if(splash) splash.remove()
+    document.getElementById("splash")?.remove()
   },600)
-
 }
 
 window.onload=async function(){
 
-setTimeout(()=>{
-  hideSplash()
-}, 800)
+setTimeout(hideSplash,800)
+setTimeout(()=>document.getElementById("iosFix")?.remove(),700)
 
 if(!userEmail){
-
 document.getElementById("loginScreen").style.display="flex"
 document.querySelector(".container").style.display="none"
 return
-
 }
 
 const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+userEmail)
 const data=await res.json()
 
 if(!data.allowed){
-
 localStorage.removeItem("prohozy_user")
-
-document.getElementById("loginScreen").style.display="flex"
-document.querySelector(".container").style.display="none"
-
+location.reload()
 return
-
 }
 
 startApp()
-
 }
 
 function startApp(){
-
 document.getElementById("loginScreen").style.display="none"
 document.querySelector(".container").style.display="block"
-
 document.getElementById("userInfo").innerText="Přihlášen: "+userEmail
-
-setTimeout(()=>{input.focus()},300)
-
 showInstallBanner()
-
-document.getElementById("installBanner").onclick=function(){
-this.style.display="none"
-localStorage.setItem("prohozy_install_hint","1")
 }
 
-}
-
-async function login(){
-
+function login(){
 let email=document.getElementById("loginEmail").value.trim().toLowerCase()
-
-const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+email)
-const data=await res.json()
-
-if(data.allowed){
-
 localStorage.setItem("prohozy_user",email)
-userEmail=email
-startApp()
-
-}else{
-
-alert("Nemáte přístup")
-
-}
-
-}
-
-gvdSelect.addEventListener("change",function(){
-
-selectedSheet=this.value
-input.value=""
-result.innerHTML=""
-
-})
-
-input.addEventListener("input",function(){
-
-this.value=this.value.replace(/[^0-9]/g,'')
-
-let value=this.value
-
-if(value.length!==3){
-result.innerHTML=""
-return
-}
-
-this.blur()
-
-findShift(value)
-
-})
-
-async function findShift(smena){
-
-const res = await fetch("https://prohozy-api.marty-protiva.workers.dev/api/find?gvd="+selectedSheet+"&smena="+smena)
-const data = await res.json()
-
-if(!data.found){
-result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
-return
-}
-
-let html=""
-let valid=false
-
-data.data.forEach(row=>{
-
-let text=row[1]
-
-if(text && text.trim()!==""){
-valid=true
-html+="<div class='box' onclick='copyText(this)'>"+text+"</div>"
-}
-
-})
-
-if(!valid){
-result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
-return
-}
-
-result.innerHTML=html
-
-const firstBox=result.querySelector(".box")
-
-if(firstBox){
-firstBox.scrollIntoView({
-behavior:"smooth",
-block:"center"
-})
-}
-
-}
-
-async function sendProhoz(btn){
-
-const smena=document.getElementById("formShift").value.trim()
-const text=document.getElementById("formText").value.trim()
-const gvd=document.getElementById("formGvd").value
-
-if(smena=="" || text==""){
-alert("Vyplň směnu a text prohozu")
-return
-}
-
-btn.disabled=true
-btn.innerText="Odesílám..."
-
-await fetch("https://prohozy-api.marty-protiva.workers.dev/api/add",{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-gvd:gvd,
-smena:smena,
-text:text,
-email:userEmail
-})
-
-})
-
-alert("Prohoz odeslán")
-
-closePopup()
-// vyčištění formuláře
-document.getElementById("formShift").value=""
-document.getElementById("formText").value=""
-document.getElementById("formGvd").value=selectedSheet
-btn.disabled=false
-btn.innerText="Odeslat"
-
-}
-
-function openPopup(){
-
-document.getElementById("popup").style.display="flex"
-
-// nastaví GVD podle hlavního výběru
-document.getElementById("formGvd").value = selectedSheet
-
-// předvyplní směnu
-document.getElementById("formShift").value = input.value
-
-}
-function closePopup(){
-document.getElementById("popup").style.display="none"
-}
-
-function copyText(el){
-
-navigator.clipboard.writeText(el.innerText)
-
-showToast("Text zkopírován")
-
+location.reload()
 }
 
 function logout(){
-
 localStorage.removeItem("prohozy_user")
 location.reload()
-
 }
 
 function showInstallBanner(){
-
 if(!window.matchMedia('(display-mode: standalone)').matches){
-
-if(!localStorage.getItem("prohozy_install_hint")){
-
-setTimeout(()=>{
-document.getElementById("installBanner").style.display="block"
-},2000)
-
+setTimeout(()=>document.getElementById("installBanner").style.display="block",2000)
+}
 }
 
-}
-
-}
-function showToast(text){
-
-let toast=document.createElement("div")
-
-toast.innerText=text
-
-toast.style.position="fixed"
-toast.style.bottom="40px"
-toast.style.left="50%"
-toast.style.transform="translateX(-50%)"
-toast.style.background="#FFD400"
-toast.style.color="black"
-toast.style.padding="12px 18px"
-toast.style.borderRadius="12px"
-toast.style.fontWeight="bold"
-toast.style.zIndex="9999"
-toast.style.boxShadow="0 0 10px rgba(0,0,0,0.5)"
-
-document.body.appendChild(toast)
-
-setTimeout(()=>{
-toast.style.opacity="0"
-toast.style.transition="opacity .4s"
-},900)
-
-setTimeout(()=>{
-toast.remove()
-},1300)
-
-}
-  
 </script>
+
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/Prohozy/sw.js');
 }
 </script>
- <script> window.addEventListener("load", ()=>{
-  setTimeout(()=>{
-    const el = document.getElementById("iosFix")
-    if(el) el.remove()
-  }, 300)
-})
-  </script>
+
 </body>
 </html>
