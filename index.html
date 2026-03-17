@@ -210,70 +210,6 @@ font-weight:bold;
 display:none;
 }
 
-#splash{
-  position:fixed;
-  inset:0;
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-#splashInner{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:20px;
-  transform:translateY(20px);
-}
-  /* KRUH */
-#splashCircle{
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  
-  /* TADY 👇 */
-  background:url("/Prohozy/icons/icon_splash_final2_v2.png") center/cover no-repeat;
-
-  box-shadow:0 0 40px rgba(255,200,0,0.6);
-  animation:pulse 1.6s infinite;
-}
-/* ANIMACE */
-@keyframes pulse{
-  0%{transform:scale(.95)}
-  50%{transform:scale(1)}
-  100%{transform:scale(.95)}
-}
-  @keyframes splashOut{
-  0%{
-    transform:translateY(20px) scale(1);
-    opacity:1;
-  }
-  60%{
-    transform:translateY(20px) scale(1.4);
-    opacity:1;
-  }
-  100%{
-    transform:translateY(20px) scale(2.2);
-    opacity:0;
-  }
-}
-
-.splash-hide #splashCircle{
-  animation:splashOut .6s ease forwards;
-}
-
-.splash-hide #splashText{
-  animation:splashOut .6s ease forwards;
-}
-/* kulatý „app bubble“ */
-#splashLogo{
-  width:180px;              /* větší */
-  border-radius:40px;       /* kulatý iOS feel */
-  transform:translateY(20px); /* posun dolů */
-  box-shadow:0 0 40px rgba(255,170,0,0.6);
-  animation:pulse 1.6s infinite;
-}
 #iosFix{
   position:fixed;
   inset:0;
@@ -285,10 +221,6 @@ display:none;
 
 <body>
 <div id="iosFix"></div>
-<div id="splash">
-<div id="splashText">Prohozy</div>
-</div>
-</div>
 
 <div id="installBanner">
 Přidej Prohozy na plochu 📱
