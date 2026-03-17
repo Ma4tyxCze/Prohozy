@@ -607,6 +607,10 @@ toast.remove()
 }
   
 </script>
-
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/Prohozy/sw.js');
+}
+</script>
 </body>
 </html>
