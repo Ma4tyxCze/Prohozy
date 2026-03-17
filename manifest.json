@@ -21,5 +21,11 @@
       "sizes": "180x180",
       "type": "image/png"
     }
+    {
+  "src": "/Prohozy/icons/icon_maskable.png",
+  "sizes": "512x512",
+  "type": "image/png",
+  "purpose": "maskable"
+}
   ]
 }
