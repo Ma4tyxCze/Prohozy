@@ -12,11 +12,11 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/Prohozy/icons/icon_32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/Prohozy/icons/icon_16.png">
 
-<link rel="apple-touch-icon" sizes="180x180" href="/Prohozy/icons/icon_ios_180.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/Prohozy/icons/icon_ios_180v2.png?v=2">
 
 <meta name="theme-color" content="#111111">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Prohozy">
 
 <style>
@@ -29,56 +29,49 @@ margin:0;
 text-align:center;
 }
 
-/* SPLASH */
-
-#iosFix{
-  position:fixed;
-  inset:0;
-  background:#111;
-  z-index:9997;
-}
+/* 🔥 SPLASH NOVÝ */
 
 #splash{
-  position:fixed;
-  inset:0;
-  background:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
+position:fixed;
+inset:0;
+background:#111;
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:9999;
 }
 
 #splashCircle{
-  width:200px;
-  height:200px;
-  border-radius:50%;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  box-shadow:0 0 50px rgba(255,180,0,0.7);
-  animation:pulse 1.6s infinite;
+width:200px;
+height:200px;
+border-radius:50%;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 0 50px rgba(255,180,0,0.7);
+animation:pulse 1.6s infinite;
 }
 
 #splashImg{
-  width:149%;
-  transform:translateY(22px);
+width:155%;
+transform:translateY(22px);
+display:block;
 }
 
 @keyframes pulse{
-  0%{transform:scale(.95)}
-  50%{transform:scale(1)}
-  100%{transform:scale(.95)}
+0%{transform:scale(.95)}
+50%{transform:scale(1)}
+100%{transform:scale(.95)}
 }
 
 @keyframes splashOut{
-  0%{transform:scale(1); opacity:1;}
-  100%{transform:scale(2.4); opacity:0;}
+0%{transform:scale(1); opacity:1;}
+100%{transform:scale(2.4); opacity:0;}
 }
 
 .splash-hide #splashCircle{
-  animation:splashOut .6s ease forwards;
+animation:splashOut .6s ease forwards;
 }
 
 /* APP */
@@ -145,6 +138,7 @@ border:none;
 background:#FFD400;
 color:black;
 text-align:center;
+text-align-last:center;
 }
 
 .addBtn{
@@ -189,13 +183,22 @@ margin:12px 0;
 border-radius:12px;
 background:#1b1b1b;
 font-size:18px;
+min-height:60px;
 display:flex;
 align-items:center;
 }
 
+.notfound{
+color:#ff6b6b;
+margin-top:10px;
+}
+
 .popup{
 position:fixed;
-inset:0;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:rgba(0,0,0,0.8);
 display:none;
 justify-content:center;
@@ -216,6 +219,7 @@ min-height:100px;
 padding:10px;
 border-radius:10px;
 border:none;
+margin-top:10px;
 }
 
 #loginScreen{
@@ -246,15 +250,16 @@ display:none;
 
 <body>
 
-<div id="iosFix"></div>
-
+<!-- 🔥 NOVÝ SPLASH -->
 <div id="splash">
   <div id="splashCircle">
     <img src="icons/uvod.png" id="splashImg">
   </div>
 </div>
 
-<div id="installBanner">Přidej Prohozy na plochu 📱</div>
+<div id="installBanner">
+Přidej Prohozy na plochu 📱
+</div>
 
 <div id="loginScreen">
 <h2>Zadej email</h2>
@@ -294,6 +299,7 @@ display:none;
 
 <div id="popup" class="popup">
 <div class="popupBox">
+
 <h2>Přidat prohoz</h2>
 
 <select id="formGvd">
@@ -319,17 +325,20 @@ display:none;
 let userEmail = localStorage.getItem("prohozy_user")
 let selectedSheet="432"
 
+const input=document.getElementById("shiftInput")
+const result=document.getElementById("result")
+const gvdSelect=document.getElementById("gvdSelect")
+
 function hideSplash(){
-  document.body.classList.add("splash-hide")
-  setTimeout(()=>{
-    document.getElementById("splash")?.remove()
-  },600)
+document.body.classList.add("splash-hide")
+setTimeout(()=>{
+document.getElementById("splash")?.remove()
+},600)
 }
 
 window.onload=async function(){
 
 setTimeout(hideSplash,800)
-setTimeout(()=>document.getElementById("iosFix")?.remove(),700)
 
 if(!userEmail){
 document.getElementById("loginScreen").style.display="flex"
@@ -342,24 +351,135 @@ const data=await res.json()
 
 if(!data.allowed){
 localStorage.removeItem("prohozy_user")
-location.reload()
+document.getElementById("loginScreen").style.display="flex"
+document.querySelector(".container").style.display="none"
 return
 }
 
 startApp()
 }
 
+/* zbytek JS NEZMĚNĚNÝ */
+
 function startApp(){
 document.getElementById("loginScreen").style.display="none"
 document.querySelector(".container").style.display="block"
 document.getElementById("userInfo").innerText="Přihlášen: "+userEmail
+setTimeout(()=>{input.focus()},300)
 showInstallBanner()
+document.getElementById("installBanner").onclick=function(){
+this.style.display="none"
+localStorage.setItem("prohozy_install_hint","1")
+}
 }
 
-function login(){
+async function login(){
 let email=document.getElementById("loginEmail").value.trim().toLowerCase()
+const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+email)
+const data=await res.json()
+if(data.allowed){
 localStorage.setItem("prohozy_user",email)
-location.reload()
+userEmail=email
+startApp()
+}else{
+alert("Nemáte přístup")
+}
+}
+
+gvdSelect.addEventListener("change",function(){
+selectedSheet=this.value
+input.value=""
+result.innerHTML=""
+})
+
+input.addEventListener("input",function(){
+this.value=this.value.replace(/[^0-9]/g,'')
+let value=this.value
+if(value.length!==3){
+result.innerHTML=""
+return
+}
+this.blur()
+findShift(value)
+})
+
+async function findShift(smena){
+const res = await fetch("https://prohozy-api.marty-protiva.workers.dev/api/find?gvd="+selectedSheet+"&smena="+smena)
+const data = await res.json()
+
+if(!data.found){
+result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
+return
+}
+
+let html=""
+let valid=false
+
+data.data.forEach(row=>{
+let text=row[1]
+if(text && text.trim()!==""){
+valid=true
+html+="<div class='box' onclick='copyText(this)'>"+text+"</div>"
+}
+})
+
+if(!valid){
+result.innerHTML="<div class='notfound'>Tady zatím nikdo nic nepřidal</div>"
+return
+}
+
+result.innerHTML=html
+
+const firstBox=result.querySelector(".box")
+if(firstBox){
+firstBox.scrollIntoView({behavior:"smooth",block:"center"})
+}
+}
+
+async function sendProhoz(btn){
+const smena=document.getElementById("formShift").value.trim()
+const text=document.getElementById("formText").value.trim()
+const gvd=document.getElementById("formGvd").value
+
+if(smena=="" || text==""){
+alert("Vyplň směnu a text prohozu")
+return
+}
+
+btn.disabled=true
+btn.innerText="Odesílám..."
+
+await fetch("https://prohozy-api.marty-protiva.workers.dev/api/add",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({gvd:gvd,smena:smena,text:text,email:userEmail})
+})
+
+alert("Prohoz odeslán")
+
+closePopup()
+
+document.getElementById("formShift").value=""
+document.getElementById("formText").value=""
+document.getElementById("formGvd").value=selectedSheet
+
+btn.disabled=false
+btn.innerText="Odeslat"
+}
+
+function openPopup(){
+document.getElementById("popup").style.display="flex"
+document.getElementById("formGvd").value = selectedSheet
+document.getElementById("formShift").value = input.value
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none"
+}
+
+function copyText(el){
+navigator.clipboard.writeText(el.innerText)
+showToast("Text zkopírován")
 }
 
 function logout(){
@@ -369,15 +489,36 @@ location.reload()
 
 function showInstallBanner(){
 if(!window.matchMedia('(display-mode: standalone)').matches){
-setTimeout(()=>document.getElementById("installBanner").style.display="block",2000)
+if(!localStorage.getItem("prohozy_install_hint")){
+setTimeout(()=>{document.getElementById("installBanner").style.display="block"},2000)
 }
+}
+}
+
+function showToast(text){
+let toast=document.createElement("div")
+toast.innerText=text
+toast.style.position="fixed"
+toast.style.bottom="40px"
+toast.style.left="50%"
+toast.style.transform="translateX(-50%)"
+toast.style.background="#FFD400"
+toast.style.color="black"
+toast.style.padding="12px 18px"
+toast.style.borderRadius="12px"
+toast.style.fontWeight="bold"
+toast.style.zIndex="9999"
+toast.style.boxShadow="0 0 10px rgba(0,0,0,0.5)"
+document.body.appendChild(toast)
+setTimeout(()=>{toast.style.opacity="0";toast.style.transition="opacity .4s"},900)
+setTimeout(()=>{toast.remove()},1300)
 }
 
 </script>
 
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/Prohozy/sw.js');
+navigator.serviceWorker.register('/Prohozy/sw.js');
 }
 </script>
 
