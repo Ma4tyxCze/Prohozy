@@ -9,17 +9,15 @@
 
 <link rel="manifest" href="/Prohozy/manifest.json">
 
-<!-- Ikonky -->
 <link rel="icon" type="image/png" sizes="32x32" href="/Prohozy/icons/icon_32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/Prohozy/icons/icon_16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/Prohozy/icons/icon_ios_180v2.png?v=2">
-
-<!-- PWA -->
-<meta name="theme-color" content="#111111">
 
 <!-- iOS -->
+<link rel="apple-touch-icon" sizes="180x180" href="/Prohozy/icons/icon_ios_180v2.png?v=5">
+
+<meta name="theme-color" content="#111111">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Prohozy">
 
 <style>
@@ -218,7 +216,7 @@ display:none;
   left:0;
   width:100%;
   height:100%;
-  background:#000;
+  background:#111;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -234,18 +232,23 @@ display:none;
   animation:pulse 1.6s infinite;
 }
 @keyframes pulse{
-0%{transform:scale(.95)}
-50%{transform:scale(1)}
-100%{transform:scale(.95)}
+0%{transform:translateY(20px) scale(.96)}
+50%{transform:translateY(20px) scale(1)}
+100%{transform:translateY(20px) scale(.96)}
 }
-
+#iosFix{
+  position:fixed;
+  inset:0;
+  background:#111;
+  z-index:9997; /* menší než splash */
+}
 </style>
 </head>
 
 <body>
-
+<div id="iosFix"></div>
 <div id="splash">
-<img src="/Prohozy/icons/icon_ios_180.png" id="splashLogo">
+<img src="/Prohozy/icons/icon_ios_180v2.png?v=5" id="splashLogo">
 </div>
 
 <div id="installBanner">
@@ -349,7 +352,9 @@ if(splash) splash.remove()
 
 window.onload=async function(){
 
-hideSplash()
+setTimeout(()=>{
+  hideSplash()
+}, 600)
 
 if(!userEmail){
 
@@ -613,5 +618,12 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/Prohozy/sw.js');
 }
 </script>
+ <script> window.addEventListener("load", ()=>{
+  setTimeout(()=>{
+    const el = document.getElementById("iosFix")
+    if(el) el.remove()
+  }, 300)
+})
+  </script>
 </body>
 </html>
