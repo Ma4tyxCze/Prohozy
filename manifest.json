@@ -20,12 +20,12 @@
       "src": "/Prohozy/icons/icon_ios_180.png",
       "sizes": "180x180",
       "type": "image/png"
-    }
+    },
     {
-  "src": "/Prohozy/icons/icon_maskable.png",
-  "sizes": "512x512",
-  "type": "image/png",
-  "purpose": "maskable"
-}
+      "src": "/Prohozy/icons/icon_maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }
