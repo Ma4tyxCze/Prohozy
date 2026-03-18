@@ -371,15 +371,26 @@ startApp()
 /* zbytek JS NEZMĚNĚNÝ */
 
 function startApp(){
-document.getElementById("loginScreen").style.display="none"
-document.querySelector(".container").style.display="block"
-document.getElementById("userInfo").innerText="Přihlášen: "+userEmail
-setTimeout(()=>{input.focus()},300)
-showInstallBanner()
-document.getElementById("installBanner").onclick=function(){
-this.style.display="none"
-localStorage.setItem("prohozy_install_hint","1")
-}
+  document.getElementById("loginScreen").style.display="none"
+  document.querySelector(".container").style.display="block"
+  document.getElementById("userInfo").innerText="Přihlášen: "+userEmail
+  setTimeout(()=>{input.focus()},300)
+  showInstallBanner()
+
+  document.getElementById("installBanner").onclick=function(){
+    this.style.display="none"
+    localStorage.setItem("prohozy_install_hint","1")
+  }
+
+  // 🔥 STATS – otevření appky
+  fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      email:userEmail,
+      akce:"open"
+    })
+  }).catch(()=>{})
 }
 
 async function login(){
@@ -463,7 +474,14 @@ method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({gvd:gvd,smena:smena,text:text,email:userEmail})
 })
-
+fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+    email:userEmail,
+    akce:"add"
+  })
+}).catch(()=>{})
 alert("Prohoz odeslán")
 
 closePopup()
