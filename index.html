@@ -43,21 +43,22 @@ transition: opacity .4s ease;
 }
 
 #splashCircle{
-  width:155%;
-  position:relative;
-  top:-10px; 
-  height:200px;
+  width:200px;          /* 👈 pevná šířka */
+  height:200px;         /* 👈 stejná = kruh */
   border-radius:50%;
   overflow:hidden;
-   align-items:center;
+
+  display:flex;         /* 👈 zpět centrování */
+  align-items:center;
   justify-content:center;
+
   box-shadow:0 0 50px rgba(255,180,0,0.7);
   animation:pulse 1.6s infinite;
 }
 
 #splashImg{
   width:155%;
-  transform:translateY(0px);
+  margin-top:-5px;   /* 👈 TADY LADÍŠ */
 }
 
 @keyframes pulse{
