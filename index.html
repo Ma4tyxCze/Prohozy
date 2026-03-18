@@ -494,8 +494,7 @@ btn.innerText="Odeslat"
 }
 
 function openPopup(){
-  savedScrollY = window.scrollY
-
+  
   document.getElementById("popup").style.display="flex"
 
   // 🔥 FREEZE BODY (hlavní fix)
@@ -527,19 +526,25 @@ function openPopup(){
 }
 function closePopup(){
 
+  // 🔥 zrušit focus
+  document.activeElement.blur()
+
   // zavřít popup
   document.getElementById("popup").style.display="none"
 
-  // 🔥 zrušit focus z popup inputu
-  document.activeElement.blur()
+  // 🔥 UNFREEZE BODY
+  document.body.style.position = ""
+  document.body.style.top = ""
+  document.body.style.left = ""
+  document.body.style.right = ""
 
-  // 🔥 reset scroll (bez animace = instant jako splash)
+  // 🔥 reset NA ZAČÁTEK (to chceš!)
   window.scrollTo(0, 0)
 
-  // 🔥 focus na hlavní input (jako start)
+  // 🔥 focus jako při startu
   setTimeout(() => {
     input.focus({ preventScroll: true })
-  }, 100)
+  }, 200)
 }
 
 function copyText(el){
