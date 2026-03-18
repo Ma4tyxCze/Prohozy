@@ -393,17 +393,19 @@ window.onload = async function(){
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
 
   if(!isIOS){
- if(!isIOS){
-  document.body.classList.add("android")
-}
- else {
-    // 🍏 iOS → nech splash
+    // 🤖 ANDROID
+    document.body.classList.add("android")
+  } else {
+    // 🍏 iOS → nech splash animaci
     setTimeout(hideSplash,400)
   }
 
   if(!userEmail){
     document.getElementById("loginScreen").style.display="flex"
     document.querySelector(".container").style.display="none"
+
+    // 🔥 i tady MUSÍ pryč splash
+    document.getElementById("splash")?.remove()
     return
   }
 
@@ -414,14 +416,17 @@ window.onload = async function(){
     localStorage.removeItem("prohozy_user")
     document.getElementById("loginScreen").style.display="flex"
     document.querySelector(".container").style.display="none"
+
+    document.getElementById("splash")?.remove()
     return
   }
 
   startApp()
-    
-setTimeout(()=>{
-  document.getElementById("splash")?.remove()
-},200)
+
+  // 🔥 splash pryč až PO načtení
+  setTimeout(()=>{
+    document.getElementById("splash")?.remove()
+  },200)
 }
 
 /* zbytek JS NEZMĚNĚNÝ */
