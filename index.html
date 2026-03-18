@@ -73,9 +73,12 @@ transition: opacity .4s ease;
 }
 
 .splash-hide #splashCircle{
-  animation:none;           /* stop pulse */
+  animation:none;
   opacity:0;
   transition:opacity .4s ease;
+}
+body.android #splashCircle{
+  animation:none;
 }
 /* APP */
 
@@ -385,27 +388,39 @@ function hideSplash(){
   },500) // musí sedět s CSS
 }
 
-window.onload=async function(){
+window.onload = async function(){
 
-setTimeout(hideSplash,500)
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
 
-if(!userEmail){
-document.getElementById("loginScreen").style.display="flex"
-document.querySelector(".container").style.display="none"
-return
-}
+  if(!isIOS){
+ requestAnimationFrame(() => {
+  document.body.classList.add("android")
+  setTimeout(()=>{
+    document.getElementById("splash")?.remove()
+  },50)
+})
+}else {
+    // 🍏 iOS → nech splash
+    setTimeout(hideSplash,400)
+  }
 
-const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+userEmail)
-const data=await res.json()
+  if(!userEmail){
+    document.getElementById("loginScreen").style.display="flex"
+    document.querySelector(".container").style.display="none"
+    return
+  }
 
-if(!data.allowed){
-localStorage.removeItem("prohozy_user")
-document.getElementById("loginScreen").style.display="flex"
-document.querySelector(".container").style.display="none"
-return
-}
+  const res=await fetch("https://prohozy-api.marty-protiva.workers.dev/api/check?email="+userEmail)
+  const data=await res.json()
 
-startApp()
+  if(!data.allowed){
+    localStorage.removeItem("prohozy_user")
+    document.getElementById("loginScreen").style.display="flex"
+    document.querySelector(".container").style.display="none"
+    return
+  }
+
+  startApp()
 }
 
 /* zbytek JS NEZMĚNĚNÝ */
