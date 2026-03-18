@@ -485,17 +485,18 @@ function openPopup(){
 
   formShift.value = input.value
 
-  formShift.focus() // otevře číselnou klávesnici
+  // 👇 TADY JE TEN FIX
+  formShift.focus({ preventScroll: true })
 
   formShift.addEventListener("input", () => {
     formShift.value = formShift.value.replace(/[^0-9]/g, "").slice(0, 3);
 
     if (formShift.value.length === 3) {
-      formShift.blur() // zavře klávesnici
+      formShift.blur()
 
       setTimeout(() => {
-        formText.focus() // 🔥 přesun do textarea
-      }, 100) // malý delay kvůli mobilům
+        formText.focus({ preventScroll: true })
+      }, 100)
     }
   }, { once: true })
 }
