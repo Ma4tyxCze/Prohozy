@@ -482,10 +482,9 @@ fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
     akce:"add"
   })
 }).catch(()=>{})
-showToast("Prohoz odeslán")
 
 closePopup()
-
+showToast("✅ Prohoz odeslán")
 document.getElementById("formShift").value=""
 document.getElementById("formText").value=""
 document.getElementById("formGvd").value=selectedSheet
@@ -527,16 +526,20 @@ function openPopup(){
   }, { once: true })
 }
 function closePopup(){
+
+  // zavřít popup
   document.getElementById("popup").style.display="none"
 
-  // 🔥 UNFREEZE BODY
-  document.body.style.position = ""
-  document.body.style.top = ""
-  document.body.style.left = ""
-  document.body.style.right = ""
+  // 🔥 zrušit focus z popup inputu
+  document.activeElement.blur()
 
-  // 🔥 vrátí přesně pozici
-  window.scrollTo(0, savedScrollY)
+  // 🔥 reset scroll (bez animace = instant jako splash)
+  window.scrollTo(0, 0)
+
+  // 🔥 focus na hlavní input (jako start)
+  setTimeout(() => {
+    input.focus({ preventScroll: true })
+  }, 100)
 }
 
 function copyText(el){
