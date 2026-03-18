@@ -393,13 +393,13 @@ window.onload = async function(){
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
 
   if(!isIOS){
-    // 🤖 ANDROID
+    // 🤖 ANDROID → úplně odstranit HTML splash
+    document.getElementById("splash")?.remove()
     document.body.classList.add("android")
   } else {
-    // 🍏 iOS → nech splash animaci
+    // 🍏 iOS → necháme splash + animace
     setTimeout(hideSplash,400)
   }
-
   if(!userEmail){
     document.getElementById("loginScreen").style.display="flex"
     document.querySelector(".container").style.display="none"
@@ -423,10 +423,6 @@ window.onload = async function(){
 
   startApp()
 
-  // 🔥 splash pryč až PO načtení
-  setTimeout(()=>{
-    document.getElementById("splash")?.remove()
-  },200)
 }
 
 /* zbytek JS NEZMĚNĚNÝ */
