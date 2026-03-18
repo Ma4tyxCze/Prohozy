@@ -495,10 +495,15 @@ btn.innerText="Odeslat"
 }
 
 function openPopup(){
-  savedScrollY = window.scrollY // 🔥 uloží pozici
+  savedScrollY = window.scrollY
 
   document.getElementById("popup").style.display="flex"
-  document.body.style.overflow = "hidden"
+
+  // 🔥 FREEZE BODY (hlavní fix)
+  document.body.style.position = "fixed"
+  document.body.style.top = `-${savedScrollY}px`
+  document.body.style.left = "0"
+  document.body.style.right = "0"
 
   document.getElementById("formGvd").value = selectedSheet
 
@@ -523,13 +528,15 @@ function openPopup(){
 }
 function closePopup(){
   document.getElementById("popup").style.display="none"
-  document.body.style.overflow = ""
 
-  // 🔥 vrátí přesně původní pozici
-  window.scrollTo({
-    top: savedScrollY,
-    behavior: "instant"
-  })
+  // 🔥 UNFREEZE BODY
+  document.body.style.position = ""
+  document.body.style.top = ""
+  document.body.style.left = ""
+  document.body.style.right = ""
+
+  // 🔥 vrátí přesně pozici
+  window.scrollTo(0, savedScrollY)
 }
 
 function copyText(el){
