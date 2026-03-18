@@ -284,11 +284,16 @@ display:none;
   width:100%;
   max-width:300px;
 }
+body.loading #loginScreen,
+body.loading .container{
+  display:none !important;
+}
+  
 </style>
 </head>
 
 <body>
-
+<body class="loading">
 <!-- 🔥 NOVÝ SPLASH -->
 <div id="splash">
   <div id="splashCircle">
@@ -393,19 +398,17 @@ window.onload = async function(){
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
 
   if(!isIOS){
-    // 🤖 ANDROID → úplně odstranit HTML splash
     document.getElementById("splash")?.remove()
     document.body.classList.add("android")
   } else {
-    // 🍏 iOS → necháme splash + animace
-    setTimeout(hideSplash,400)
+    setTimeout(hideSplash,800)
   }
+
   if(!userEmail){
     document.getElementById("loginScreen").style.display="flex"
     document.querySelector(".container").style.display="none"
 
-    // 🔥 i tady MUSÍ pryč splash
-    document.getElementById("splash")?.remove()
+    document.body.classList.remove("loading")
     return
   }
 
@@ -417,12 +420,13 @@ window.onload = async function(){
     document.getElementById("loginScreen").style.display="flex"
     document.querySelector(".container").style.display="none"
 
-    document.getElementById("splash")?.remove()
+    document.body.classList.remove("loading")
     return
   }
 
   startApp()
 
+  document.body.classList.remove("loading")
 }
 
 /* zbytek JS NEZMĚNĚNÝ */
