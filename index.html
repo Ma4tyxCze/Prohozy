@@ -486,7 +486,7 @@ fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
 
 // 🔥 1. ALERT (vracíme)
 alert("Prohoz odeslán")
-
+location.reload() // 🔥 FULL RESET
 // 🔥 2. RESET PO ALERTU (KLÍČ)
 document.activeElement.blur()
 document.body.style.zoom = "1"
