@@ -196,14 +196,15 @@ margin-top:10px;
 
 .popup{
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+inset:0;
 background:rgba(0,0,0,0.8);
 display:none;
 justify-content:center;
 align-items:center;
+
+/* 🔥 KLÍČ */
+padding:16px;
+box-sizing:border-box;
 }
 
 .popupBox{
@@ -219,12 +220,11 @@ gap:12px;
 }
 
 textarea{
-width:100%;
-min-height:100px;
-padding:10px;
-border-radius:10px;
-border:none;
-margin-top:10px;
+  width:100%;
+  min-height:80px;   /* 🔥 menší */
+  padding:10px;
+  border-radius:10px;
+  border:none;
 }
 
 #loginScreen{
@@ -254,18 +254,24 @@ display:none;
   gap:10px;
 }
 
-#formGvd{
-  flex:2;
-  height:50px;
-  border-radius:10px;
+#formGvd,
+#formShift{
+  flex:1;              /* 🔥 STEJNÁ ŠÍŘKA */
+  height:55px;
+  font-size:18px;
+  border-radius:12px;
+  border:none;
+}
+  .popupButtons{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
 }
 
-#formShift{
-  flex:1;
-  height:50px;
-  font-size:20px;
-  border-radius:10px;
-  text-align:center;
+.popupButtons button{
+  width:100%;
+  max-width:300px;
 }
 </style>
 </head>
@@ -346,8 +352,10 @@ Přidej Prohozy na plochu 📱
 </div>
 
 <textarea id="formText"></textarea>
-<button onclick="sendProhoz(this)">Odeslat</button>
-<button onclick="closePopup()">Zrušit</button>
+<div class="popupButtons">
+  <button onclick="sendProhoz(this)">Odeslat</button>
+  <button onclick="closePopup()">Zrušit</button>
+</div>
 
 </div>
 </div>
