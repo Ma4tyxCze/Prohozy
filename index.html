@@ -333,7 +333,7 @@ Přidej Prohozy na plochu 📱
 
 let userEmail = localStorage.getItem("prohozy_user")
 let selectedSheet="432"
-
+let savedScrollY = 0
 const input=document.getElementById("shiftInput")
 const result=document.getElementById("result")
 const gvdSelect=document.getElementById("gvdSelect")
@@ -495,8 +495,10 @@ btn.innerText="Odeslat"
 }
 
 function openPopup(){
+  savedScrollY = window.scrollY // 🔥 uloží pozici
+
   document.getElementById("popup").style.display="flex"
-  document.body.style.overflow = "hidden" // 🔥 LOCK
+  document.body.style.overflow = "hidden"
 
   document.getElementById("formGvd").value = selectedSheet
 
@@ -519,15 +521,15 @@ function openPopup(){
     }
   }, { once: true })
 }
-
 function closePopup(){
   document.getElementById("popup").style.display="none"
-
-  // 🔓 UNLOCK
   document.body.style.overflow = ""
 
-  // návrat na původní pozici
-  window.scrollTo(0, 0)
+  // 🔥 vrátí přesně původní pozici
+  window.scrollTo({
+    top: savedScrollY,
+    behavior: "instant"
+  })
 }
 
 function copyText(el){
