@@ -245,15 +245,7 @@ border-radius:12px;
 font-weight:bold;
 display:none;
 }
-/* 🔥 FIX zoomu na mobilech */
-input, textarea, select {
-  font-size: 16px !important;
-}
 
-/* 🔥 iOS text zoom fix */
-html {
-  -webkit-text-size-adjust: 100%;
-}
 </style>
 </head>
 
@@ -494,7 +486,6 @@ fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
 
 // 🔥 1. ALERT (vracíme)
 alert("Prohoz odeslán")
-location.reload() // 🔥 FULL RESET
 // 🔥 2. RESET PO ALERTU (KLÍČ)
 document.activeElement.blur()
 document.body.style.zoom = "1"
