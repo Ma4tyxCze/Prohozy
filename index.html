@@ -522,12 +522,21 @@ function openPopup(){
 function closePopup(){
   document.getElementById("popup").style.display="none"
 
+  // 🔥 počkej než zmizí popup
   setTimeout(() => {
+
+    // nejdřív scroll
     input.scrollIntoView({
       behavior: "smooth",
       block: "center"
     })
-  }, 100)
+
+    // pak až focus (důležité!)
+    setTimeout(() => {
+      input.focus({ preventScroll: true })
+    }, 300)
+
+  }, 150)
 }
 
 function copyText(el){
