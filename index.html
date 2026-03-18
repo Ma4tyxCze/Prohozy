@@ -496,6 +496,8 @@ btn.innerText="Odeslat"
 
 function openPopup(){
   document.getElementById("popup").style.display="flex"
+  document.body.style.overflow = "hidden" // 🔥 LOCK
+
   document.getElementById("formGvd").value = selectedSheet
 
   const formShift = document.getElementById("formShift")
@@ -503,7 +505,6 @@ function openPopup(){
 
   formShift.value = input.value
 
-  // 👇 TADY JE TEN FIX
   formShift.focus({ preventScroll: true })
 
   formShift.addEventListener("input", () => {
@@ -522,21 +523,11 @@ function openPopup(){
 function closePopup(){
   document.getElementById("popup").style.display="none"
 
-  // 🔥 počkej než zmizí popup
-  setTimeout(() => {
+  // 🔓 UNLOCK
+  document.body.style.overflow = ""
 
-    // nejdřív scroll
-    input.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    })
-
-    // pak až focus (důležité!)
-    setTimeout(() => {
-      input.focus({ preventScroll: true })
-    }, 300)
-
-  }, 150)
+  // návrat na původní pozici
+  window.scrollTo(0, 0)
 }
 
 function copyText(el){
