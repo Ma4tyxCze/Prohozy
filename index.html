@@ -221,10 +221,11 @@ gap:14px;
 
 textarea{
   width:100%;
-  min-height:80px;   /* 🔥 menší */
+  min-height:80px;
   padding:10px;
   border-radius:10px;
   border:none;
+  box-sizing:border-box;  /* 🔥 důležité */
 }
 
 #loginScreen{
@@ -254,9 +255,13 @@ display:none;
   gap:10px;
 }
 
-#formGvd,
+#formGvd{
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 #formShift{
-  flex:1;              /* 🔥 STEJNÁ ŠÍŘKA */
+  flex:1;
+  min-width:0;        /* 🔥 KLÍČ – dovolí zmenšení */
   height:55px;
   font-size:18px;
   border-radius:12px;
