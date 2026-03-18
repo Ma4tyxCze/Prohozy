@@ -3,7 +3,7 @@
   "short_name": "Prohozy",
   "display": "standalone",
   "start_url": ".",
-  "background_color": "#000000",
+  "background_color": "#111111",
   "theme_color": "#111111",
   "icons": [
     {
@@ -14,11 +14,6 @@
     {
       "src": "/Prohozy/icons/icon_512.png",
       "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "/Prohozy/icons/icon_ios_180.png",
-      "sizes": "180x180",
       "type": "image/png"
     },
     {
