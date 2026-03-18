@@ -393,13 +393,10 @@ window.onload = async function(){
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent)
 
   if(!isIOS){
- requestAnimationFrame(() => {
+ if(!isIOS){
   document.body.classList.add("android")
-  setTimeout(()=>{
-    document.getElementById("splash")?.remove()
-  },50)
-})
-}else {
+}
+ else {
     // 🍏 iOS → nech splash
     setTimeout(hideSplash,400)
   }
@@ -421,6 +418,10 @@ window.onload = async function(){
   }
 
   startApp()
+    
+setTimeout(()=>{
+  document.getElementById("splash")?.remove()
+},200)
 }
 
 /* zbytek JS NEZMĚNĚNÝ */
