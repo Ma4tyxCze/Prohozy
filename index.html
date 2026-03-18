@@ -520,7 +520,14 @@ function openPopup(){
 }
 
 function closePopup(){
-document.getElementById("popup").style.display="none"
+  document.getElementById("popup").style.display="none"
+
+  setTimeout(() => {
+    input.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    })
+  }, 100)
 }
 
 function copyText(el){
