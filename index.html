@@ -212,6 +212,10 @@ padding:30px;
 width:90%;
 max-width:420px;
 border-radius:16px;
+
+display:flex;
+flex-direction:column;
+gap:12px;
 }
 
 textarea{
@@ -245,7 +249,24 @@ border-radius:12px;
 font-weight:bold;
 display:none;
 }
+.formRow{
+  display:flex;
+  gap:10px;
+}
 
+#formGvd{
+  flex:2;
+  height:50px;
+  border-radius:10px;
+}
+
+#formShift{
+  flex:1;
+  height:50px;
+  font-size:20px;
+  border-radius:10px;
+  text-align:center;
+}
 </style>
 </head>
 
@@ -303,26 +324,28 @@ Přidej Prohozy na plochu 📱
 
 <h2>Přidat prohoz</h2>
 
-<select id="formGvd">
-<option value="432">Všední den 432</option>
-<option value="441">Sobota 441</option>
-<option value="451">Neděle 451</option>
-<option value="50">Všední den 50</option>
-<option value="44">Sobota 44</option>
-<option value="45">Neděle 45</option>
-</select>
+<div class="formRow">
+  <select id="formGvd">
+    <option value="432">Všední den 432</option>
+    <option value="441">Sobota 441</option>
+    <option value="451">Neděle 451</option>
+    <option value="50">Všední den 50</option>
+    <option value="44">Sobota 44</option>
+    <option value="45">Neděle 45</option>
+  </select>
 
-<input 
-  id="formShift"
-  type="tel"
-  inputmode="numeric"
-  pattern="[0-9]*"
-  maxlength="3"
-  placeholder="Směna"
-  enterkeyhint="done"
-/>
+  <input 
+    id="formShift"
+    type="tel"
+    inputmode="numeric"
+    pattern="[0-9]*"
+    maxlength="3"
+    placeholder="Směna"
+    enterkeyhint="done"
+  />
+</div>
+
 <textarea id="formText"></textarea>
-
 <button onclick="sendProhoz(this)">Odeslat</button>
 <button onclick="closePopup()">Zrušit</button>
 
@@ -519,8 +542,7 @@ function openPopup(){
 
   formShift.value = input.value
 
-  formShift.focus({ preventScroll: true })
-
+ 
   formShift.addEventListener("input", () => {
     formShift.value = formShift.value.replace(/[^0-9]/g, "").slice(0, 3);
 
