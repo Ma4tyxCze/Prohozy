@@ -51,6 +51,9 @@ align-items:center;
 justify-content:center;
 box-shadow:0 0 50px rgba(255,180,0,0.7);
 animation:pulse 1.6s infinite;
+
+  will-change: transform, opacity; /* 🔥 SEM PATŘÍ */
+
 }
 
 #splashImg{
@@ -71,7 +74,10 @@ display:block;
 }
 
 .splash-hide #splashCircle{
-animation:splashOut .6s ease forwards;
+   animation:none;              /* 🔥 stopne pulse */
+  transform:scale(2.2);
+  opacity:0;
+  transition:all .5s ease;     /* 🔥 smooth místo animace */
 }
 
 /* APP */
