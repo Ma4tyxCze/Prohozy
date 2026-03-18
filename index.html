@@ -474,6 +474,7 @@ method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({gvd:gvd,smena:smena,text:text,email:userEmail})
 })
+
 fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
   method:"POST",
   headers:{"Content-Type":"application/json"},
@@ -483,8 +484,17 @@ fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
   })
 }).catch(()=>{})
 
+// 🔥 1. ALERT (vracíme)
+alert("Prohoz odeslán")
+
+// 🔥 2. RESET PO ALERTU (KLÍČ)
+document.activeElement.blur()
+document.body.style.zoom = "1"
+
+// 🔥 3. zavřít popup
 closePopup()
-showToast("✅ Prohoz odeslán")
+
+// 🔥 4. vyčistit form
 document.getElementById("formShift").value=""
 document.getElementById("formText").value=""
 document.getElementById("formGvd").value=selectedSheet
@@ -494,7 +504,7 @@ btn.innerText="Odeslat"
 }
 
 function openPopup(){
-  
+  savedScrollY = window.scrollY
   document.getElementById("popup").style.display="flex"
 
   // 🔥 FREEZE BODY (hlavní fix)
@@ -539,7 +549,7 @@ function closePopup(){
   document.body.style.right = ""
 
   // 🔥 reset NA ZAČÁTEK (to chceš!)
-  window.scrollTo(0, 0)
+ window.scrollTo(0, savedScrollY)
 
   // 🔥 focus jako při startu
   setTimeout(() => {
