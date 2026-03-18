@@ -312,7 +312,15 @@ Přidej Prohozy na plochu 📱
 <option value="45">Neděle 45</option>
 </select>
 
-<input id="formShift" placeholder="Směna">
+<input 
+  id="formShift"
+  type="tel"
+  inputmode="numeric"
+  pattern="[0-9]*"
+  maxlength="3"
+  placeholder="Směna"
+  enterkeyhint="done"
+/>
 <textarea id="formText"></textarea>
 
 <button onclick="sendProhoz(this)">Odeslat</button>
@@ -469,9 +477,27 @@ btn.innerText="Odeslat"
 }
 
 function openPopup(){
-document.getElementById("popup").style.display="flex"
-document.getElementById("formGvd").value = selectedSheet
-document.getElementById("formShift").value = input.value
+  document.getElementById("popup").style.display="flex"
+  document.getElementById("formGvd").value = selectedSheet
+
+  const formShift = document.getElementById("formShift")
+  const formText = document.getElementById("formText")
+
+  formShift.value = input.value
+
+  formShift.focus() // otevře číselnou klávesnici
+
+  formShift.addEventListener("input", () => {
+    formShift.value = formShift.value.replace(/[^0-9]/g, "").slice(0, 3);
+
+    if (formShift.value.length === 3) {
+      formShift.blur() // zavře klávesnici
+
+      setTimeout(() => {
+        formText.focus() // 🔥 přesun do textarea
+      }, 100) // malý delay kvůli mobilům
+    }
+  }, { once: true })
 }
 
 function closePopup(){
