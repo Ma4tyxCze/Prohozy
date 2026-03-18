@@ -58,9 +58,8 @@ animation:pulse 1.6s infinite;
 }
 
 #splashImg{
-width:155%;
-transform:translateY(22px);
-display:block;
+  width:100%;
+  transform:none;
 }
 
 @keyframes pulse{
@@ -75,10 +74,8 @@ display:block;
 }
 
 .splash-hide #splashCircle{
-  animation:none;
-  transform:scale(1.3);   /* místo 2.2 → menší = méně agresivní */
   opacity:0;
-  transition:transform .5s ease, opacity .5s ease;
+  transition:opacity .3s ease;
 }
 
 /* APP */
@@ -391,7 +388,7 @@ function hideSplash(){
 
 window.onload=async function(){
 
-setTimeout(hideSplash,800)
+setTimeout(hideSplash,200)
 
 if(!userEmail){
 document.getElementById("loginScreen").style.display="flex"
