@@ -570,27 +570,21 @@ function openPopup(){
 }
 function closePopup(){
 
-  // 🔥 zrušit focus
+  // zrušit focus
   document.activeElement.blur()
 
   // zavřít popup
   document.getElementById("popup").style.display="none"
 
-  // 🔥 UNFREEZE BODY
+  // UNFREEZE BODY
   document.body.style.position = ""
   document.body.style.top = ""
   document.body.style.left = ""
   document.body.style.right = ""
 
-  // 🔥 reset NA ZAČÁTEK (to chceš!)
- window.scrollTo(0, savedScrollY)
-
-  // 🔥 focus jako při startu
-  setTimeout(() => {
-    input.focus({ preventScroll: true })
-  }, 200)
+  // vrátit scroll
+  window.scrollTo(0, savedScrollY)
 }
-
 function copyText(el){
 navigator.clipboard.writeText(el.innerText)
 showToast("Text zkopírován")
