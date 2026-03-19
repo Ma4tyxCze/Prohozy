@@ -434,6 +434,20 @@ function startApp(){
   document.getElementById("loginScreen").style.display="none"
   document.querySelector(".container").style.display="block"
   document.getElementById("userInfo").innerText="Přihlášen: "+userEmail
+
+  // 🔥 DEFAULT GVD PODLE DNE
+  const day = new Date().getDay() // 0 = neděle, 6 = sobota
+
+  if(day === 6){
+    selectedSheet = "441" // sobota
+  } else if(day === 0){
+    selectedSheet = "451" // neděle
+  } else {
+    selectedSheet = "432" // všední den
+  }
+
+  gvdSelect.value = selectedSheet
+
   setTimeout(()=>{input.focus()},300)
   showInstallBanner()
 
