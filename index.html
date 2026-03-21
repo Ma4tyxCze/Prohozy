@@ -305,14 +305,18 @@ body.loading .container{
   color:#FFD400;
   font-weight:bold;
 
-  font-size: 25px;        /* 👈 větší písmo */
-  animation: tickerMove 6s linear infinite;  /* 👈 rychlejší pohyb */
+  font-size: 27px;        /* 👈 větší písmo */
+  animation: tickerMove 5s linear infinite;  /* 👈 rychlejší pohyb */
 }
 
 @keyframes tickerMove{
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}  
+  0% {
+    transform: translateX(100vw);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
 </style>
 </head>
 
