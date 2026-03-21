@@ -288,7 +288,29 @@ body.loading #loginScreen,
 body.loading .container{
   display:none !important;
 }
-  
+/* TICKER */
+
+#tickerWrapper{
+  width:100%;
+  overflow:hidden;
+  margin: 5px 0 5px 0;
+  height:28px;
+
+  display:none; /* default skrytý */
+}
+
+#tickerText{
+  display:inline-block;
+  white-space:nowrap;
+  color:#FFD400;
+  font-weight:bold;
+  animation: tickerMove 16s linear infinite;
+}
+
+@keyframes tickerMove{
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}  
 </style>
 </head>
 
@@ -314,6 +336,10 @@ Přidej Prohozy na plochu 📱
 
 <img src="https://i.imgur.com/uHurObD.png" class="logo">
 
+  <div id="tickerWrapper">
+  <div id="tickerText"></div>
+</div>
+  
 <h1 class="appTitle">Prohozy</h1>
 
 <div class="userBar">
@@ -435,6 +461,7 @@ function startApp(){
   document.querySelector(".container").style.display="block"
   document.getElementById("userInfo").innerText="Přihlášen: "+userEmail
 
+  loadTicker()
   // 🔥 DEFAULT GVD PODLE DNE
   const day = new Date().getDay() // 0 = neděle, 6 = sobota
 
@@ -659,7 +686,34 @@ document.body.appendChild(toast)
 setTimeout(()=>{toast.style.opacity="0";toast.style.transition="opacity .4s"},900)
 setTimeout(()=>{toast.remove()},1300)
 }
+async function loadTicker(){
 
+  try{
+
+    const res = await fetch(
+      "https://prohozy-api.marty-protiva.workers.dev/api/ticker"
+    )
+
+    const data = await res.json()
+
+    const text = data.text?.trim()
+
+    if(text){
+
+      document.getElementById("tickerText").innerText = text
+
+      document.getElementById("tickerWrapper").style.display = "block"
+
+    }
+
+  }catch(e){
+
+    console.log("ticker error")
+
+  }
+
+}
+  
 </script>
 
 <script>
