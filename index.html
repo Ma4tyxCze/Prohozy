@@ -302,19 +302,19 @@ body.loading .container{
 #tickerText{
   display:inline-block;
   white-space:nowrap;
-  color:#FF9800;
+  color:#FF3B3B;
   font-weight:bold;
+  font-size:26px;
 
-  font-size: 26px;        /* 👈 větší písmo */
-  animation: tickerMove 10s linear infinite;  /* 👈 rychlejší pohyb */
+  padding-left:100%;   /* 👈 důležité */
+  animation: tickerMove 10s linear infinite;
 }
-
 @keyframes tickerMove{
   0% {
-    transform: translateX(100vw);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-100vw);
+    transform: translateX(-100%);
   }
 }
 </style>
