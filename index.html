@@ -702,19 +702,63 @@ async function loadTicker(){
 
     const data = await res.json()
 
-    const text = data.text?.trim()
+    const wrapper =
+      document.getElementById("tickerWrapper")
 
-    if(text){
+    const textElement =
+      document.getElementById("tickerText")
 
-      document.getElementById("tickerText").innerText = text
+    if(!Array.isArray(data) || data.length === 0){
 
-      document.getElementById("tickerWrapper").style.display = "block"
+      wrapper.style.display = "none"
+      return
+
+    }
+
+    const dnes = new Date()
+    dnes.setHours(0,0,0,0)
+
+    let aktivniTexty = []
+
+    data.forEach(item => {
+
+      if(!item.text || !item.od || !item.do) return
+
+      const od = new Date(item.od)
+      const doData = new Date(item.do)
+
+      od.setHours(0,0,0,0)
+      doData.setHours(23,59,59,999)
+
+      if(dnes >= od && dnes <= doData){
+
+        aktivniTexty.push(
+          item.text.trim()
+        )
+
+      }
+
+    })
+
+    if(aktivniTexty.length > 0){
+
+      textElement.innerText =
+        aktivniTexty.join("   •   ")
+
+      wrapper.style.display = "block"
+
+    }else{
+
+      wrapper.style.display = "none"
 
     }
 
   }catch(e){
 
     console.log("ticker error")
+
+    document.getElementById("tickerWrapper")
+      .style.display = "none"
 
   }
 
