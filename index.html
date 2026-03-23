@@ -742,20 +742,35 @@ async function loadTicker(){
 
     if(aktivniTexty.length > 0){
 
-      textElement.innerText =
-        aktivniTexty.join("   •   ")
-// 🔥 stabilní rychlost tickeru podle délky textu
-const textLength = textElement.innerText.length
+  textElement.innerText =
+    aktivniTexty.join("   •   ")
 
-const duration =
-  Math.max(6, textLength / 8)
+  wrapper.style.display = "block"
 
-textElement.style.animationDuration =
-  duration + "s"
-      
-      wrapper.style.display = "block"
+  // 🔥 stabilní rychlost tickeru podle skutečné šířky
 
-    }else{
+  requestAnimationFrame(() => {
+
+    const textWidth =
+      textElement.scrollWidth
+
+    const screenWidth =
+      wrapper.offsetWidth
+
+    const distance =
+      textWidth + screenWidth
+
+    const speed = 80   // můžeš měnit
+
+    const duration =
+      distance / speed
+
+    textElement.style.animationDuration =
+      duration + "s"
+
+  })
+
+}else{
 
       wrapper.style.display = "none"
 
