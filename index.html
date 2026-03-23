@@ -744,7 +744,15 @@ async function loadTicker(){
 
       textElement.innerText =
         aktivniTexty.join("   •   ")
+// 🔥 stabilní rychlost tickeru podle délky textu
+const textLength = textElement.innerText.length
 
+const duration =
+  Math.max(6, textLength / 10)
+
+textElement.style.animationDuration =
+  duration + "s"
+      
       wrapper.style.display = "block"
 
     }else{
