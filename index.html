@@ -538,10 +538,7 @@ function startApp(){
 
   gvdSelect.value = selectedSheet
 
-  setTimeout(() => {
-  input.focus()
-  input.click() // 👈 důležité pro mobil
-}, 300)
+  
   showInstallBanner()
 
   document.getElementById("installBanner").onclick=function(){
