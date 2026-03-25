@@ -106,9 +106,12 @@ padding: 0 20px 20px 20px; /* nahoře 0 */
 .userBar{
 display:flex;
 gap:10px;
-justify-content:center;
+justify-content:space-between;   /* 👈 místo center */
 align-items:center;
 margin-bottom:20px;
+
+width:100%;                      /* 👈 důležité */
+max-width:100%;                  /* 👈 ochrana */
 }
 .userBar > *{
   height:44px;           /* 👈 tady má být výška */
@@ -117,12 +120,16 @@ margin-bottom:20px;
 .userBox{
   background:#1b1b1b;
   border:1px solid #444;
-  padding:0 16px;        /* 👈 změna */
+  padding:0 16px;
   border-radius:12px;
-  white-space:nowrap;
 
-  display:flex;           /* 👈 přidat */
-  align-items:center;     /* 👈 vertikální střed */
+  display:flex;
+  align-items:center;
+
+  max-width:70%;        /* 👈 zabrání přetékání */
+  overflow:hidden;      /* 👈 skryje přebytek */
+  text-overflow:ellipsis; /* 👈 ... */
+  white-space:nowrap;
 }
 
 button{
