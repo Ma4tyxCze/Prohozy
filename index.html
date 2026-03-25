@@ -298,6 +298,13 @@ body.loading .container{
 
   display:none; /* default skrytý */
 }
+  #tickerWrapper,
+#tickerText,
+#tickerContent{
+  -webkit-user-select: none;   /* iOS Safari */
+  user-select: none;
+  -webkit-touch-callout: none; /* vypne menu "Kopírovat" na iOS */
+}
 #tickerWrapper:active #tickerText{
   animation-play-state: paused;
 }
