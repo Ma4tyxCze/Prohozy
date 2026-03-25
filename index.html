@@ -3,7 +3,7 @@
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 
 <title>Prohozy</title>
 
@@ -415,7 +415,17 @@ let savedScrollY = 0
 const input=document.getElementById("shiftInput")
 const result=document.getElementById("result")
 const gvdSelect=document.getElementById("gvdSelect")
+// 🔥 označení čísla + posun do středu obrazovky (mobil)
+input.addEventListener("focus", function() {
+  this.select()
 
+  setTimeout(() => {
+    this.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    })
+  }, 300)
+})
 function hideSplash(){
   document.body.classList.add("splash-hide")
 
@@ -481,7 +491,10 @@ function startApp(){
 
   gvdSelect.value = selectedSheet
 
-  setTimeout(()=>{input.focus()},300)
+  setTimeout(() => {
+  input.focus()
+  input.click() // 👈 důležité pro mobil
+}, 300)
   showInstallBanner()
 
   document.getElementById("installBanner").onclick=function(){
