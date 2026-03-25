@@ -298,7 +298,9 @@ body.loading .container{
 
   display:none; /* default skrytý */
 }
-
+#tickerWrapper:active #tickerText{
+  animation-play-state: paused;
+}
 #tickerText{
   display:inline-block;
   white-space:nowrap;
