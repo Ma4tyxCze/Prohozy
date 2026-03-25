@@ -302,9 +302,10 @@ body.loading .container{
   animation-play-state: paused;
 }
 #tickerIcon{
-  height:42px;
+  height:100%;        /* 👈 vyplní výšku wrapperu */
+  width:auto;         /* zachová poměr stran */
   margin-right:12px;
-  image-rendering: pixelated; /* zachová pixel art */
+  image-rendering: pixelated;
 }
 
   
