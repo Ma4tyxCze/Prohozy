@@ -302,7 +302,7 @@ body.loading .container{
   animation-play-state: paused;
 }
 #tickerIcon{
-  height:22px;
+  height:42px;
   margin-right:12px;
   image-rendering: pixelated; /* zachová pixel art */
 }
@@ -819,7 +819,29 @@ async function loadTicker(){
   }
 
 }
-  
+  // 🔥 PAUZA TICKERU NA DOTYK (iOS + Android + desktop)
+
+const ticker = document.getElementById("tickerText")
+
+if (ticker) {
+
+  ticker.addEventListener("touchstart", () => {
+    ticker.style.animationPlayState = "paused"
+  })
+
+  ticker.addEventListener("touchend", () => {
+    ticker.style.animationPlayState = "running"
+  })
+
+  ticker.addEventListener("mousedown", () => {
+    ticker.style.animationPlayState = "paused"
+  })
+
+  ticker.addEventListener("mouseup", () => {
+    ticker.style.animationPlayState = "running"
+  })
+
+}
 </script>
 
 <script>
