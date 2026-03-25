@@ -109,14 +109,18 @@ gap:10px;
 justify-content:center;
 align-items:center;
 margin-bottom:20px;
+height:44px;           /* 👈 všichni stejně vysocí */
 }
 
 .userBox{
-background:#1b1b1b;
-border:1px solid #444;
-padding:10px 16px;
-border-radius:12px;
-white-space:nowrap;
+  background:#1b1b1b;
+  border:1px solid #444;
+  padding:0 16px;        /* 👈 změna */
+  border-radius:12px;
+  white-space:nowrap;
+
+  display:flex;           /* 👈 přidat */
+  align-items:center;     /* 👈 vertikální střed */
 }
 
 button{
@@ -129,7 +133,7 @@ border-radius:10px;
 cursor:pointer;
 }
 .userBar button{
-  padding:12px 18px;   /* stejné jako input */
+  padding:0 18px;        /* 👈 změna */
   font-size:18px;
   display:flex;
   align-items:center;
