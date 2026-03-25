@@ -109,9 +109,11 @@ gap:10px;
 justify-content:center;
 align-items:center;
 margin-bottom:20px;
-height:44px;           /* 👈 všichni stejně vysocí */
 }
-
+.userBar > *{
+  height:44px;           /* 👈 tady má být výška */
+  box-sizing:border-box;
+}
 .userBox{
   background:#1b1b1b;
   border:1px solid #444;
