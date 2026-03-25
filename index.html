@@ -301,15 +301,23 @@ body.loading .container{
 #tickerWrapper:active #tickerText{
   animation-play-state: paused;
 }
-#tickerText{
-  display:inline-block;
+#tickerIcon{
+  height:22px;
+  margin-right:12px;
+  image-rendering: pixelated; /* zachová pixel art */
+}
+
+  
+ #tickerText{
+  display:inline-flex;
+  align-items:center;
   white-space:nowrap;
   color:#FF3B3B;
   font-weight:bold;
   font-size:26px;
 
-  padding-left:100%;   /* 👈 důležité */
-  animation: tickerMove 7s linear infinite;
+  padding-left:100%;
+  animation: tickerMove linear infinite;
 }
 @keyframes tickerMove{
   0% {
@@ -345,7 +353,10 @@ Přidej Prohozy na plochu 📱
 <img src="https://i.imgur.com/uHurObD.png" class="logo">
 
   <div id="tickerWrapper">
-  <div id="tickerText"></div>
+  <div id="tickerText">
+    <img src="icons/ticker-metro.png" id="tickerIcon">
+    <span id="tickerContent"></span>
+  </div>
 </div>
   
 <h1 class="appTitle">Prohozy</h1>
@@ -764,8 +775,8 @@ async function loadTicker(){
 
     if(aktivniTexty.length > 0){
 
-  textElement.innerText =
-    aktivniTexty.join("   •   ")
+  document.getElementById("tickerContent").innerText =
+  aktivniTexty.join("   •   ")
 
   wrapper.style.display = "block"
 
