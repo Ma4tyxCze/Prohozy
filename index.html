@@ -128,7 +128,11 @@ font-weight:bold;
 border-radius:10px;
 cursor:pointer;
 }
-
+.userBar button{
+  height:44px;       /* stejná výška */
+  padding:0 16px;
+  font-size:18px;
+}
 .topBar{
 display:flex;
 gap:12px;
@@ -174,13 +178,15 @@ display:block;
 }
 
 #loginEmail{
-width:260px;
-padding:12px;
-font-size:18px;
-border-radius:12px;
-border:none;
-margin:10px auto;
-display:block;
+  width:260px;
+  height:44px;          /* 👈 přidat */
+  padding:0 12px;       /* 👈 změnit */
+  font-size:18px;
+  border-radius:12px;
+  border:none;
+  margin:10px auto;
+  display:block;
+  box-sizing:border-box; /* 👈 důležité */
 }
 
 .box{
