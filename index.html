@@ -655,7 +655,14 @@ function closePopup(){
 
   // vrátit scroll
   window.scrollTo(0, savedScrollY)
+  
 }
+  // 🔥 zavření popupu kliknutím mimo okno
+document.getElementById("popup").addEventListener("click", function(e) {
+  if (e.target === this) {
+    closePopup();
+  }
+});
 function copyText(el){
 navigator.clipboard.writeText(el.innerText)
 showToast("Text zkopírován")
