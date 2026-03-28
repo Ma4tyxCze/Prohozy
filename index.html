@@ -282,27 +282,37 @@ display:none;
 }
 
 #formGvd{
+  flex:1;                 /* 👈 zabere zbytek místa */
+  min-width:0;            /* 👈 dovolí zmenšení */
+  height:55px;
+  font-size:16px;         /* 👈 trochu menší text */
+  border-radius:12px;
+  border:none;
+
   overflow:hidden;
   text-overflow:ellipsis;
+  white-space:nowrap;
 }
 #formShift{
-  flex:1;
-  min-width:0;        /* 🔥 KLÍČ – dovolí zmenšení */
+  width:90px;        /* 👈 menší pole */
+  flex:0 0 90px;     /* 👈 fixní šířka */
   height:55px;
   font-size:18px;
   border-radius:12px;
   border:none;
+  text-align:center;
 }
   .popupButtons{
   display:flex;
   flex-direction:column;
   gap:10px;
-  align-items:center;
+  align-items:stretch;   /* 👈 důležité */
 }
 
 .popupButtons button{
-  width:100%;
-  max-width:300px;
+  width:100%;            /* 👈 stejné tlačítko */
+  height:48px;           /* 👈 hezčí výška */
+  font-size:18px;
 }
 body.loading #loginScreen,
 body.loading .container{
@@ -525,8 +535,50 @@ function startApp(){
   document.getElementById("userInfo").innerText = userEmail
 
   loadTicker()
-  // 🔥 DEFAULT GVD PODLE DNE
-  const day = new Date().getDay() // 0 = neděle, 6 = sobota
+  // 🔥 DEFAULT GVD + VÝJIMKY
+const today = new Date()
+const day = today.getDay() // 0 = neděle, 6 = sobota
+
+// --- VÝJIMKY NA KONKRÉTNÍ DATA ---
+
+// 30.–31. 3. → 432
+if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 2 && // březen
+  (today.getDate() === 30 || today.getDate() === 31)
+){
+  selectedSheet = "432"
+}
+
+// 1.–2. 4. → 50
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 && // duben
+  (today.getDate() === 1 || today.getDate() === 2)
+){
+  selectedSheet = "50"
+}
+
+// 3.–4. 4. → 44
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  (today.getDate() === 3 || today.getDate() === 4)
+){
+  selectedSheet = "44"
+}
+
+// 5.–6. 4. → 45
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  (today.getDate() === 5 || today.getDate() === 6)
+){
+  selectedSheet = "45"
+}
+
+// --- STANDARDNÍ REŽIM ---
+else {
 
   if(day === 6){
     selectedSheet = "441" // sobota
@@ -535,6 +587,8 @@ function startApp(){
   } else {
     selectedSheet = "432" // všední den
   }
+
+}
 
   gvdSelect.value = selectedSheet
 
