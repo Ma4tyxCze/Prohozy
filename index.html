@@ -181,7 +181,15 @@ align-items:center;
 justify-content:center;
 cursor:pointer;
 }
-
+.popupHint{
+  font-size:14px;
+  color:#bbb;
+  margin-top:-6px;
+  margin-bottom:6px;
+  text-align:center;
+  line-height:1.3;
+}
+  
 #shiftInput{
 width:140px;
 font-size:36px;
@@ -440,7 +448,9 @@ Přidej Prohozy na plochu 📱
 <div class="popupBox">
 
 <h2>Přidat prohoz</h2>
-
+<p class="popupHint">
+Před odesláním kontrolujte správnost GVD a číslo směny
+</p>
 <div class="formRow">
   <select id="formGvd">
     <option value="432">Všední den 432</option>
