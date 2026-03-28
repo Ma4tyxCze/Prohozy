@@ -247,11 +247,14 @@ gap:14px;
 
 textarea{
   width:100%;
-  min-height:80px;
-  padding:10px;
-  border-radius:10px;
+  min-height:110px;   /* 👈 větší prostor na psaní */
+  padding:12px;
+  border-radius:12px;
   border:none;
-  box-sizing:border-box;  /* 🔥 důležité */
+  box-sizing:border-box;
+
+  font-size:16px;
+  resize:vertical;    /* 👈 uživatel může zvětšit */
 }
 
 #loginScreen{
@@ -279,6 +282,7 @@ display:none;
 .formRow{
   display:flex;
   gap:10px;
+  align-items:stretch;   /* 👈 srovná výšky */
 }
 
 #formGvd{
@@ -294,13 +298,16 @@ display:none;
   white-space:nowrap;
 }
 #formShift{
-  width:90px;        /* 👈 menší pole */
-  flex:0 0 90px;     /* 👈 fixní šířka */
-  height:55px;
+  width:90px;
+  flex:0 0 90px;
+
+  height:55px;           /* 👈 stejná výška jako GVD */
   font-size:18px;
   border-radius:12px;
   border:none;
+
   text-align:center;
+  box-sizing:border-box;
 }
   .popupButtons{
   display:flex;
