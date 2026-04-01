@@ -427,9 +427,6 @@ Přidej Prohozy na plochu 📱
 
 <div class="topBar">
 <select id="gvdSelect">
-<option value="432">Všední den 432</option>
-<option value="441">Sobota 441</option>
-<option value="451">Neděle 451</option>
 <option value="50">Všední den 50</option>
 <option value="44">Sobota 44</option>
 <option value="45">Neděle 45</option>
@@ -453,9 +450,6 @@ Před odesláním kontrolujte správnost GVD a číslo směny
 </p>
 <div class="formRow">
   <select id="formGvd">
-    <option value="432">Všední den 432</option>
-    <option value="441">Sobota 441</option>
-    <option value="451">Neděle 451</option>
     <option value="50">Všední den 50</option>
     <option value="44">Sobota 44</option>
     <option value="45">Neděle 45</option>
@@ -484,7 +478,7 @@ Před odesláním kontrolujte správnost GVD a číslo směny
 <script>
 
 let userEmail = localStorage.getItem("prohozy_user")
-let selectedSheet="432"
+let selectedSheet="50"
 let savedScrollY = 0
 const input=document.getElementById("shiftInput")
 const result=document.getElementById("result")
@@ -598,11 +592,11 @@ else if(
 else {
 
   if(day === 6){
-    selectedSheet = "441" // sobota
+    selectedSheet = "44" // sobota
   } else if(day === 0){
-    selectedSheet = "451" // neděle
+    selectedSheet = "45" // neděle
   } else {
-    selectedSheet = "432" // všední den
+    selectedSheet = "50" // všední den
   }
 
 }
