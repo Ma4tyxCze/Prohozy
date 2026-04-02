@@ -863,6 +863,7 @@ btn.innerText="Odeslat"
 }
 
 function openPopup(){
+ document.querySelector(".contactBtn").style.display = "none";
   savedScrollY = window.scrollY
   document.getElementById("popup").style.display="flex"
 
@@ -908,7 +909,7 @@ function closePopup(){
 
   // vrátit scroll
   window.scrollTo(0, savedScrollY)
-  
+  document.querySelector(".contactBtn").style.display = "flex";
 }
   // 🔥 zavření popupu kliknutím mimo okno
 document.getElementById("popup").addEventListener("click", function(e) {
