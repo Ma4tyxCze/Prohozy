@@ -1096,10 +1096,16 @@ function contactAdmin(phone){
 
   closeContactPopup()
 }
-  document.getElementById("contactPopup").addEventListener("click", function(e) {
-  if (e.target === this) {
-    closeContactPopup();
-  }
+ document.addEventListener("DOMContentLoaded", function () {
+
+  const contactPopup = document.getElementById("contactPopup");
+
+  contactPopup.addEventListener("click", function (e) {
+    if (e.target === contactPopup) {
+      closeContactPopup();
+    }
+  });
+
 });
 </script>
 
