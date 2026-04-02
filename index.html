@@ -221,6 +221,7 @@ font-size:18px;
 min-height:60px;
 display:flex;
 align-items:center;
+white-space: pre-line;  /* řádek v boxu */
 }
 
 .notfound{
@@ -430,6 +431,9 @@ Přidej Prohozy na plochu 📱
 <option value="50">Všední den 50</option>
 <option value="44">Sobota 44</option>
 <option value="45">Neděle 45</option>
+<option value="5001">Všední den 5001</option>
+<option value="4402">Sobota 4402</option>
+<option value="4501">Neděle 4501</option>
 </select>
 
 <button class="addBtn" onclick="openPopup()">Přidat prohoz</button>
@@ -453,6 +457,9 @@ Před odesláním kontrolujte správnost GVD a číslo směny
     <option value="50">Všední den 50</option>
     <option value="44">Sobota 44</option>
     <option value="45">Neděle 45</option>
+    <option value="5001">Všední den 5001</option>
+    <option value="4402">Sobota 4402</option>
+    <option value="4501">Neděle 4501</option>
   </select>
 
   <input 
@@ -552,17 +559,8 @@ const day = today.getDay() // 0 = neděle, 6 = sobota
 
 // --- VÝJIMKY NA KONKRÉTNÍ DATA ---
 
-// 30.–31. 3. → 432
-if(
-  today.getFullYear() === 2026 &&
-  today.getMonth() === 2 && // březen
-  (today.getDate() === 30 || today.getDate() === 31)
-){
-  selectedSheet = "432"
-}
-
 // 1.–2. 4. → 50
-else if(
+ if(
   today.getFullYear() === 2026 &&
   today.getMonth() === 3 && // duben
   (today.getDate() === 1 || today.getDate() === 2)
@@ -587,7 +585,61 @@ else if(
 ){
   selectedSheet = "45"
 }
+// 7.–10. 4. → 5001
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  today.getDate() >= 7 &&
+  today.getDate() <= 10
+){
+  selectedSheet = "5001"
+}
 
+// 11. 4. → 4402
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  today.getDate() === 11
+){
+  selectedSheet = "4402"
+}
+
+// 12. 4. → 4501
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  today.getDate() === 12
+){
+  selectedSheet = "4501"
+}
+
+// 13.–17. 4. → 5001
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  today.getDate() >= 13 &&
+  today.getDate() <= 17
+){
+  selectedSheet = "5001"
+}
+
+// 18. 4. → 4402
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  today.getDate() === 18
+){
+  selectedSheet = "4402"
+}
+
+// 19. 4. → 4501
+else if(
+  today.getFullYear() === 2026 &&
+  today.getMonth() === 3 &&
+  today.getDate() === 19
+){
+  selectedSheet = "4501"
+}
 // --- STANDARDNÍ REŽIM ---
 else {
 
