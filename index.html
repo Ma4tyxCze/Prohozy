@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/Prohozy/icons/icon_16.png">
 
 <link rel="apple-touch-icon" href="/Prohozy/icons/icon_ios_180v2.png?v=3">
-
+<meta name="robots" content="noindex">
 <meta name="theme-color" content="#111111">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1089,7 +1089,7 @@ function contactAdmin(phone){
   const url = "https://wa.me/" + phone
 
   if (/iphone|ipad|ipod/i.test(navigator.userAgent)) {
-    window.location.href = url
+    window.open(url, "_blank", "noopener")
   } else {
     window.open(url, "_blank")
   }
