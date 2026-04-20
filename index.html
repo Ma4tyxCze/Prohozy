@@ -502,7 +502,7 @@ justify-content:center;
 
 .logoRow .contactBtn{
 position:absolute;
-right:240px;    /* 👈 víc doleva */
+right:260px;    /* 👈 víc doleva */
 top:230px;     /* 👈 výška od horní hrany loga */
 
 width:40px;        /* 👈 hodně malé */
@@ -1112,9 +1112,10 @@ function openCurrentPdf(){
     selectedSheet +
     ".pdf"
 
-  // 🔥 otevře PDF v systémovém vieweru
   window.open(url, "_blank")
 
+  // malé info pro uživatele
+  showToast("Pro návrat přejeď prstem doleva")
 }
 
 function closePdfViewer(){
