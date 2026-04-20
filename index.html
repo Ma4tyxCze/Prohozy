@@ -1112,12 +1112,8 @@ function openCurrentPdf(){
     selectedSheet +
     ".pdf"
 
-  const frame = document.getElementById("pdfFrame")
-
-  frame.src = ""
-  frame.src = url + "#toolbar=1&navpanes=0&scrollbar=1"
-
-  document.getElementById("pdfViewer").style.display = "block"
+  // 🔥 otevře PDF v systémovém vieweru
+  window.open(url, "_blank")
 
 }
 
