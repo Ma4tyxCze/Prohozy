@@ -1105,12 +1105,16 @@ function openCurrentPdf(){
     return
   }
 
-  const url =
+  const fileUrl =
     "https://ma4tyxcze.github.io/Prohozy/pdfs/gvd_" +
     selectedSheet +
     ".pdf"
 
-  document.getElementById("pdfFrame").src = url
+  const viewerUrl =
+    "https://docs.google.com/gview?embedded=1&url=" +
+    encodeURIComponent(fileUrl)
+
+  document.getElementById("pdfFrame").src = viewerUrl
   document.getElementById("pdfViewer").style.display = "block"
 
 }
