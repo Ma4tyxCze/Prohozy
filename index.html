@@ -96,6 +96,8 @@ z-index:9999;
 width:100%;
 height:100%;
 border:none;
+overflow:auto;
+-webkit-overflow-scrolling: touch;
 }
 
 /* tlačítko zavřít */
@@ -500,7 +502,7 @@ justify-content:center;
 
 .logoRow .contactBtn{
 position:absolute;
-right:90px;    /* 👈 víc doleva */
+right:360px;    /* 👈 víc doleva */
 top:230px;     /* 👈 výška od horní hrany loga */
 
 width:40px;        /* 👈 hodně malé */
@@ -1105,16 +1107,16 @@ function openCurrentPdf(){
     return
   }
 
-  const fileUrl =
+  const url =
     "https://ma4tyxcze.github.io/Prohozy/pdfs/gvd_" +
     selectedSheet +
     ".pdf"
 
-  const viewerUrl =
-    "https://docs.google.com/gview?embedded=1&url=" +
-    encodeURIComponent(fileUrl)
+  const frame = document.getElementById("pdfFrame")
 
-  document.getElementById("pdfFrame").src = viewerUrl
+  frame.src = ""
+  frame.src = url + "#toolbar=1&navpanes=0&scrollbar=1"
+
   document.getElementById("pdfViewer").style.display = "block"
 
 }
