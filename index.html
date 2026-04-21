@@ -1148,7 +1148,20 @@ async function registerPush(){
   if(!("serviceWorker" in navigator)){
     return
   }
+// 🔔 požádej o povolení notifikací
 
+const permission =
+  await Notification.requestPermission()
+
+if(permission !== "granted"){
+
+  console.log(
+    "notifications not allowed"
+  )
+
+  return
+
+}
   try{
 
     const reg =
