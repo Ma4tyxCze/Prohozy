@@ -2,9 +2,21 @@ self.addEventListener("install", (e) => {
   self.skipWaiting();
 });
 
+self.addEventListener(
+  "activate",
+  function(event){
+
+    event.waitUntil(
+      self.clients.claim()
+    )
+
+  }
+);
+
 self.addEventListener("fetch", (event) => {
   event.respondWith(fetch(event.request));
 });
+
 self.addEventListener(
   "push",
   function(event){
@@ -37,7 +49,8 @@ self.addEventListener(
     )
 
   }
-)
+);
+
 self.addEventListener(
   "notificationclick",
   function(event){
@@ -46,11 +59,30 @@ self.addEventListener(
 
     event.waitUntil(
 
-      clients.openWindow(
-        "/Prohozy/"
-      )
+      clients.matchAll({
+        type: "window",
+        includeUncontrolled: true
+      }).then(function(clientList){
+
+        for(let i = 0; i < clientList.length; i++){
+
+          const client = clientList[i]
+
+          if(client.url.includes("/Prohozy/")){
+
+            return client.focus()
+
+          }
+
+        }
+
+        return clients.openWindow(
+          "/Prohozy/"
+        )
+
+      })
 
     )
 
   }
-)
+);
