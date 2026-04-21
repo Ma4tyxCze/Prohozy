@@ -437,7 +437,7 @@ body.loading .container{
   .pushBtn{
 position:absolute;
 
-right:250px;   /* 👈 vlevo od statistik */
+right:210px;   /* 👈 vlevo od statistik */
 
 top:230px;
 
@@ -1292,29 +1292,31 @@ if(permission !== "granted"){
 
     // 🔥 POSÍLEJ VŽDY (i když existuje)
 
-    await fetch(
-      "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-        body: JSON.stringify({
+   const res = await fetch(
+  "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: userEmail,
+      subscription: sub
+    })
+  }
+)
 
-          email:
-            userEmail,
+const text = await res.text()
 
-          subscription:
-            sub
+alert(
+  "subscribe response:\n" +
+  text
+)
 
-        })
-      }
-    )
-alert("subscription sent")
-    console.log(
-      "subscription sent"
-    )
+console.log(
+  "subscribe response:",
+  text
+)
 }catch(e){
 
   console.log(
