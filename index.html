@@ -1194,7 +1194,7 @@ function contactAdmin(phone){
 
 });
 async function registerPush(){
-
+  alert("registerPush start")
   if(!("serviceWorker" in navigator)){
     return
   }
@@ -1256,7 +1256,7 @@ if(permission !== "granted"){
         })
       }
     )
-
+alert("subscription sent")
     console.log(
       "subscription sent"
     )
