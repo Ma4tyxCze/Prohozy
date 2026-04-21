@@ -746,7 +746,11 @@ if(admins.includes(userEmail)){
 
   loadTicker()
   
+ setTimeout(()=>{
+
   registerPush().catch(()=>{})
+
+},1500)
   
   const today = new Date()
   const day = today.getDay() // 0 = neděle, 6 = sobota
