@@ -1453,9 +1453,50 @@ function roundRect(
   ctx.closePath()
 
 }
-  function openNotifyPopup(){
+ async function openNotifyPopup(){
 
-  alert("Tady bude odeslání notifikace")
+  const message =
+    prompt(
+      "Zadej oznámení pro všechny uživatele"
+    )
+
+  if(!message){
+    return
+  }
+
+  try{
+
+    await fetch(
+      "https://prohozy-api.marty-protiva.workers.dev/api/notify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+        body: JSON.stringify({
+
+          title:
+            "Prohozy",
+
+          message:
+            message
+
+        })
+      }
+    )
+
+    alert(
+      "Oznámení odesláno"
+    )
+
+  }catch(e){
+
+    alert(
+      "Chyba odeslání"
+    )
+
+  }
 
 }
   
