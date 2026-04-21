@@ -1250,7 +1250,6 @@ function urlBase64ToUint8Array(base64String){
   
   async function registerPush(){
 
-  alert("registerPush start")
 
   if(!("serviceWorker" in navigator)){
     alert("no service worker")
@@ -1282,9 +1281,7 @@ function urlBase64ToUint8Array(base64String){
 
       })
 
-    alert("subscription created")
-
-    const res =
+        const res =
       await fetch(
         "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
         {
