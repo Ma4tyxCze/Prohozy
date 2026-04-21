@@ -1150,7 +1150,13 @@ async function registerPush(){
     const reg =
       await navigator.serviceWorker.ready
 
-    // 🔹 zjisti existující subscription
+    const vapidKey =
+      "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
+
+    const convertedKey =
+      urlBase64ToUint8Array(
+        vapidKey
+      )
 
     let sub =
       await reg.pushManager.getSubscription()
@@ -1163,13 +1169,11 @@ async function registerPush(){
           userVisibleOnly: true,
 
           applicationServerKey:
-            "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
+            convertedKey
 
         })
 
     }
-
-    // 🔹 pošli subscription + email
 
     await fetch(
       "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
@@ -1194,10 +1198,41 @@ async function registerPush(){
   }catch(e){
 
     console.log(
-      "push subscribe error"
+      "push subscribe error",
+      e
     )
 
   }
+
+}
+  function urlBase64ToUint8Array(base64String){
+
+  const padding =
+    "=".repeat(
+      (4 - base64String.length % 4) % 4
+    )
+
+  const base64 =
+    (base64String + padding)
+      .replace(/\-/g,"+")
+      .replace(/_/g,"/")
+
+  const rawData =
+    window.atob(base64)
+
+  const outputArray =
+    new Uint8Array(
+      rawData.length
+    )
+
+  for(let i = 0; i < rawData.length; ++i){
+
+    outputArray[i] =
+      rawData.charCodeAt(i)
+
+  }
+
+  return outputArray
 
 }
 </script>
