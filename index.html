@@ -1154,14 +1154,6 @@ async function registerPush(){
     const reg =
       await navigator.serviceWorker.ready
 
-    const vapidKey =
-      "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
-
-    const convertedKey =
-      urlBase64ToUint8Array(
-        vapidKey
-      )
-
     let sub =
       await reg.pushManager.getSubscription()
 
@@ -1173,11 +1165,13 @@ async function registerPush(){
           userVisibleOnly: true,
 
           applicationServerKey:
-            convertedKey
+            "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
 
         })
 
     }
+
+    // 🔥 POSÍLEJ VŽDY (i když existuje)
 
     await fetch(
       "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
@@ -1197,6 +1191,10 @@ async function registerPush(){
 
         })
       }
+    )
+
+    console.log(
+      "subscription sent"
     )
 
   }catch(e){
