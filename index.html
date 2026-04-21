@@ -1269,31 +1269,33 @@ if(permission !== "granted"){
 }
   try{
 
-    const reg =
-      await navigator.serviceWorker.ready
+  alert("1 ready")
 
-    let sub =
-      await reg.pushManager.getSubscription()
+  const reg =
+    await navigator.serviceWorker.ready
 
-    if(!sub){
+  alert("2 subscription check")
 
-      sub =
-        await reg.pushManager.subscribe({
+  let sub =
+    await reg.pushManager.getSubscription()
 
-          userVisibleOnly: true,
+  if(!sub){
 
-          applicationServerKey:
-  urlBase64ToUint8Array(
-    "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
-  )
-        })
+    sub =
+      await reg.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey:
+          urlBase64ToUint8Array(
+            "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
+          )
+      })
 
-    }
+  }
 
-    // 🔥 POSÍLEJ VŽDY (i když existuje)
-alert("sending subscription...")
-   const res = await fetch(
-  "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
+  alert("3 sending to server")
+
+  const res = await fetch(
+    "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
   {
     method: "POST",
     headers: {
