@@ -1003,12 +1003,10 @@ async function loadTicker(){
     const textElement =
       document.getElementById("tickerText")
 
-    if(!Array.isArray(data) || data.length === 0){
-
-      wrapper.style.display = "none"
-      return
-
-    }
+   if(!wrapper || !textElement){
+  console.log("ticker elements missing")
+  return
+}
 
     const dnes = new Date()
     dnes.setHours(0,0,0,0)
