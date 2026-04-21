@@ -1150,15 +1150,26 @@ async function registerPush(){
     const reg =
       await navigator.serviceWorker.ready
 
-    const sub =
-      await reg.pushManager.subscribe({
+    // 🔹 zjisti existující subscription
 
-        userVisibleOnly: true,
+    let sub =
+      await reg.pushManager.getSubscription()
 
-        applicationServerKey:
-          "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
+    if(!sub){
 
-      })
+      sub =
+        await reg.pushManager.subscribe({
+
+          userVisibleOnly: true,
+
+          applicationServerKey:
+            "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
+
+        })
+
+    }
+
+    // 🔹 pošli subscription + email
 
     await fetch(
       "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
@@ -1168,13 +1179,23 @@ async function registerPush(){
           "Content-Type":
             "application/json"
         },
-        body: JSON.stringify(sub)
+        body: JSON.stringify({
+
+          email:
+            userEmail,
+
+          subscription:
+            sub
+
+        })
       }
     )
 
   }catch(e){
 
-    console.log("push subscribe error")
+    console.log(
+      "push subscribe error"
+    )
 
   }
 
