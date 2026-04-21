@@ -1249,90 +1249,83 @@ function urlBase64ToUint8Array(base64String){
 }
   
   async function registerPush(){
+
   alert("registerPush start")
+
   if(!("serviceWorker" in navigator)){
+    alert("no service worker")
     return
   }
-// 🔔 požádej o povolení notifikací
 
-const permission =
-  await Notification.requestPermission()
-
-if(permission !== "granted"){
-
-  console.log(
-    "notifications not allowed"
-  )
-
-  return
-
-}
   try{
 
-  alert("1 ready")
+    const reg =
+      await navigator.serviceWorker.ready
 
-  const reg =
-    await navigator.serviceWorker.ready
+    let sub =
+      await reg.pushManager.getSubscription()
 
-  alert("2 subscription check")
-
-  let sub =
-    await reg.pushManager.getSubscription()
-
-  if(!sub){
+    if(sub){
+      // pokud existuje, zruš ho a vytvoř nový
+      await sub.unsubscribe()
+    }
 
     sub =
       await reg.pushManager.subscribe({
+
         userVisibleOnly: true,
+
         applicationServerKey:
           urlBase64ToUint8Array(
             "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
           )
+
       })
 
+    alert("subscription created")
+
+    const res =
+      await fetch(
+        "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+
+            email: userEmail,
+
+            subscription:
+              JSON.stringify(sub)
+
+          })
+        }
+      )
+
+    const text =
+      await res.text()
+
+    alert(
+      "subscribe response:\n" +
+      text
+    )
+
+  }catch(e){
+
+    alert(
+      "subscribe error:\n" +
+      e.message
+    )
+
+    console.log(
+      "push subscribe error",
+      e
+    )
+
   }
-
-  alert("3 sending to server")
-
-  const res = await fetch(
-    "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
-  {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-   body: JSON.stringify({
-  email: userEmail,
-  subscription: JSON.stringify(sub)
-})
-  }
-)
-
-const text = await res.text()
-
-alert(
-  "subscribe response:\n" +
-  text
-)
-
-console.log(
-  "subscribe response:",
-  text
-)
-}catch(e){
-
-  console.log(
-    "push subscribe error",
-    e
-  )
-
-  alert(
-    "subscribe error: " +
-    e.message
-  )
 
 }
- } 
 </script>
 <script>
 function openCurrentPdf(){
