@@ -1260,15 +1260,17 @@ alert("subscription sent")
     console.log(
       "subscription sent"
     )
+}catch(e){
 
-  }catch(e){
+  console.log(
+    "push subscribe error",
+    e
+  )
 
-    console.log(
-      "push subscribe error",
-      e
-    )
-
-  }
+  alert(
+    "subscribe error: " +
+    e.message
+  )
 
 }
   function urlBase64ToUint8Array(base64String){
