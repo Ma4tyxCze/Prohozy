@@ -1203,7 +1203,7 @@ document.querySelector(".statsBtn").style.display = "none";
   }
 
 }
-  function drawChart(history){
+ function drawChart(history){
 
   const canvas =
     document.getElementById("statsChart")
@@ -1223,23 +1223,159 @@ document.querySelector(".statsBtn").style.display = "none";
   }
 
   const max =
-  Math.max(...history) || 1
+    Math.max(...history) || 1
 
-  const barWidth = 20
+  const padding = 30
+  const chartHeight = 110
+  const barWidth = 22
+  const gap = 18
+
+  const days = ["Po","Út","St","Čt","Pá","So","Ne"]
+
+  // 🔹 mřížka
+
+  ctx.strokeStyle = "#333"
+  ctx.lineWidth = 1
+
+  for(let i = 0; i <= 4; i++){
+
+    const y =
+      padding +
+      (chartHeight / 4) * i
+
+    ctx.beginPath()
+
+    ctx.moveTo(
+      padding,
+      y
+    )
+
+    ctx.lineTo(
+      canvas.width - 10,
+      y
+    )
+
+    ctx.stroke()
+
+  }
+
+  // 🔹 sloupce
 
   history.forEach((value, i) => {
 
     const height =
-      (value / max) * 120
+      (value / max) * chartHeight
 
-    ctx.fillRect(
-      i * 30 + 10,
-      140 - height,
-      barWidth,
+    const x =
+      padding +
+      i * (barWidth + gap)
+
+    const y =
+      padding +
+      chartHeight -
       height
+
+    ctx.fillStyle =
+      "#FFD400"
+
+    roundRect(
+      ctx,
+      x,
+      y,
+      barWidth,
+      height,
+      6
+    )
+
+    ctx.fill()
+
+    // číslo nad sloupcem
+
+    ctx.fillStyle =
+      "#fff"
+
+    ctx.font =
+      "12px Arial"
+
+    ctx.textAlign =
+      "center"
+
+    ctx.fillText(
+      value,
+      x + barWidth / 2,
+      y - 6
+    )
+
+    // den dole
+
+    ctx.fillStyle =
+      "#aaa"
+
+    ctx.fillText(
+      days[i],
+      x + barWidth / 2,
+      padding +
+      chartHeight +
+      15
     )
 
   })
+
+}
+
+// helper pro zaoblené rohy
+
+function roundRect(
+  ctx,
+  x,
+  y,
+  width,
+  height,
+  radius
+){
+
+  ctx.beginPath()
+
+  ctx.moveTo(
+    x + radius,
+    y
+  )
+
+  ctx.lineTo(
+    x + width - radius,
+    y
+  )
+
+  ctx.quadraticCurveTo(
+    x + width,
+    y,
+    x + width,
+    y + radius
+  )
+
+  ctx.lineTo(
+    x + width,
+    y + height
+  )
+
+  ctx.lineTo(
+    x,
+    y + height
+  )
+
+  ctx.lineTo(
+    x,
+    y + radius
+  )
+
+  ctx.quadraticCurveTo(
+    x,
+    y,
+    x + radius,
+    y
+  )
+
+  ctx.closePath()
 
 }
   function openNotifyPopup(){
