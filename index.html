@@ -437,7 +437,7 @@ body.loading .container{
   .pushBtn{
 position:absolute;
 
-right:150px;   /* 👈 vlevo od statistik */
+right:250px;   /* 👈 vlevo od statistik */
 
 top:230px;
 
@@ -651,18 +651,7 @@ Aplikace neobsahuje žádné reklamy, stahování souborů ani sběr osobních �
 </div>
 
 <div class="topBar">
-<button id="enablePushBtn"
-  style="
-    margin-top:10px;
-    display:none;
-    height:50px;
-    font-size:18px;
-  "
-  onclick="enablePush()"
->
-🔔 Zapnout oznámení
-</button>
-  <select id="gvdSelect">
+<select id="gvdSelect">
 <option value="50">Všední den 50</option>
 <option value="44">Sobota 44</option>
 <option value="45">Neděle 45</option>
@@ -1339,7 +1328,7 @@ alert("subscription sent")
   )
 
 }
-  
+ } 
 </script>
 <script>
 function openCurrentPdf(){
