@@ -1203,13 +1203,19 @@ document.querySelector(".statsBtn").style.display = "none";
   }
 
 }
- function drawChart(history){
+function drawChart(history){
 
   const canvas =
     document.getElementById("statsChart")
 
   const ctx =
     canvas.getContext("2d")
+
+  // 🔹 nastav reálnou šířku podle popupu
+  canvas.width =
+    canvas.parentElement.clientWidth - 20
+
+  canvas.height = 180
 
   ctx.clearRect(
     0,
@@ -1225,12 +1231,24 @@ document.querySelector(".statsBtn").style.display = "none";
   const max =
     Math.max(...history) || 1
 
-  const padding = 30
+  const padding = 25
   const chartHeight = 110
-  const barWidth = 22
-  const gap = 18
 
-  const days = ["Po","Út","St","Čt","Pá","So","Ne"]
+  const count =
+    history.length
+
+  const gap = 10
+
+  const barWidth =
+    (canvas.width -
+      padding * 2 -
+      gap * (count - 1)
+    ) / count
+
+  const days = [
+    "Po","Út","St",
+    "Čt","Pá","So","Ne"
+  ]
 
   // 🔹 mřížka
 
@@ -1251,7 +1269,7 @@ document.querySelector(".statsBtn").style.display = "none";
     )
 
     ctx.lineTo(
-      canvas.width - 10,
+      canvas.width - padding,
       y
     )
 
@@ -1259,12 +1277,11 @@ document.querySelector(".statsBtn").style.display = "none";
 
   }
 
-  // 🔹 sloupce
-
   history.forEach((value, i) => {
 
     const height =
-      (value / max) * chartHeight
+      (value / max) *
+      chartHeight
 
     const x =
       padding +
@@ -1322,8 +1339,6 @@ document.querySelector(".statsBtn").style.display = "none";
   })
 
 }
-
-// helper pro zaoblené rohy
 
 function roundRect(
   ctx,
@@ -1402,7 +1417,7 @@ function closePdfViewer(){
       Načítám...
     </div>
 
-    <canvas id="statsChart" width="280" height="160"></canvas>
+   <canvas id="statsChart" height="180" style="width:100%; max-width:100%;"></canvas>
 
     <button onclick="openNotifyPopup()">
       Poslat oznámení
