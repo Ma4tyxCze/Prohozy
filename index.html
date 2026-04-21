@@ -891,6 +891,7 @@ btn.innerText="Odeslat"
 function openPopup(){
  document.querySelector(".contactBtn").style.display = "none";
   document.querySelector(".pdfBtn").style.display = "none";
+  document.querySelector(".statsBtn").style.display = "none";
   savedScrollY = window.scrollY
   document.getElementById("popup").style.display="flex"
 
@@ -938,6 +939,9 @@ function closePopup(){
   window.scrollTo(0, savedScrollY)
   document.querySelector(".contactBtn").style.display = "flex";
   document.querySelector(".pdfBtn").style.display = "flex";
+  if(document.querySelector(".statsBtn")){
+  document.querySelector(".statsBtn").style.display = "flex";
+}
 }
   // 🔥 zavření popupu kliknutím mimo okno
 document.getElementById("popup").addEventListener("click", function(e) {
@@ -1159,74 +1163,30 @@ function openCurrentPdf(){
 async function openStatsPopup(){
 
   document.getElementById("statsPopup").style.display="flex"
-
+document.querySelector(".contactBtn").style.display = "none";
+document.querySelector(".pdfBtn").style.display = "none";
+document.querySelector(".statsBtn").style.display = "none";
   try{
 
     const res = await fetch(
-      "https://prohozy-api.marty-protiva.workers.dev/api/stats"
+      "https://prohozy-api.marty-protiva.workers.dev/api/stats-summary"
     )
 
     const data = await res.json()
 
-    // očekává pole záznamů
-
-    let opens = 0
-    let adds = 0
-
-    const today = new Date()
-    today.setHours(0,0,0,0)
-
-    const history = [0,0,0,0,0,0,0]
-
-    data.forEach(item => {
-
-      if(!item.akce || !item.cas) return
-
-      const date = new Date(item.cas)
-
-      // dnes
-
-      if(date >= today){
-
-        if(item.akce === "open"){
-          opens++
-        }
-
-        if(item.akce === "add"){
-          adds++
-        }
-
-      }
-
-      // posledních 7 dní
-
-      const diff =
-        Math.floor(
-          (today - date) /
-          (1000*60*60*24)
-        )
-
-      if(diff >= 0 && diff < 7){
-
-        history[6 - diff]++
-
-      }
-
-    })
-
     document.getElementById("statsContent").innerHTML =
       `
-      Otevření dnes: ${opens}<br>
-      Přidané prohozy: ${adds}<br>
-      Záznamů celkem: ${data.length}
+      Otevření dnes: ${data.opens}<br>
+      Přidané prohozy: ${data.adds}<br>
+      Uživatelé celkem: ${data.users}
       `
 
-    drawChart(history)
+    drawChart(data.history)
 
   }catch(e){
 
     document.getElementById("statsContent").innerHTML =
-      "Chyba načítání"
+      "Chyba načítání statistik"
 
   }
 
@@ -1234,6 +1194,13 @@ async function openStatsPopup(){
   function closeStatsPopup(){
 
   document.getElementById("statsPopup").style.display="none"
+
+  document.querySelector(".contactBtn").style.display = "flex";
+  document.querySelector(".pdfBtn").style.display = "flex";
+
+  if(document.querySelector(".statsBtn")){
+    document.querySelector(".statsBtn").style.display = "flex";
+  }
 
 }
   function drawChart(history){
