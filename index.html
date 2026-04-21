@@ -1291,7 +1291,7 @@ if(permission !== "granted"){
     }
 
     // 🔥 POSÍLEJ VŽDY (i když existuje)
-
+alert("sending subscription...")
    const res = await fetch(
   "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
   {
@@ -1299,10 +1299,10 @@ if(permission !== "granted"){
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({
-      email: userEmail,
-      subscription: sub
-    })
+   body: JSON.stringify({
+  email: userEmail,
+  subscription: JSON.stringify(sub)
+})
   }
 )
 
