@@ -745,7 +745,9 @@ if(admins.includes(userEmail)){
   document.getElementById("userInfo").innerText = userEmail
 
   loadTicker()
-
+  
+  registerPush().catch(()=>{})
+  
   const today = new Date()
   const day = today.getDay() // 0 = neděle, 6 = sobota
 
@@ -1139,7 +1141,46 @@ function contactAdmin(phone){
   });
 
 });
+async function registerPush(){
 
+  if(!("serviceWorker" in navigator)){
+    return
+  }
+
+  try{
+
+    const reg =
+      await navigator.serviceWorker.ready
+
+    const sub =
+      await reg.pushManager.subscribe({
+
+        userVisibleOnly: true,
+
+        applicationServerKey:
+          "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
+
+      })
+
+    await fetch(
+      "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+        body: JSON.stringify(sub)
+      }
+    )
+
+  }catch(e){
+
+    console.log("push subscribe error")
+
+  }
+
+}
 </script>
 <script>
 function openCurrentPdf(){
