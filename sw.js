@@ -9,8 +9,16 @@ self.addEventListener(
   "push",
   function(event){
 
-    const data =
-      event.data.json()
+    let data = {
+      title: "Prohozy",
+      body: "Nové oznámení"
+    }
+
+    if(event.data){
+      try{
+        data = event.data.json()
+      }catch(e){}
+    }
 
     event.waitUntil(
 
@@ -24,6 +32,22 @@ self.addEventListener(
             "/Prohozy/icons/icon_192.png"
         }
 
+      )
+
+    )
+
+  }
+)
+self.addEventListener(
+  "notificationclick",
+  function(event){
+
+    event.notification.close()
+
+    event.waitUntil(
+
+      clients.openWindow(
+        "/Prohozy/"
       )
 
     )
