@@ -460,6 +460,31 @@ cursor:pointer;
 z-index:25;
 }
 
+  .statsBtn{
+position:absolute;
+right:110px;   /* mezi WA a PDF */
+top:230px;
+
+width:40px;
+height:40px;
+
+border-radius:50%;
+
+background:#FFD400;
+color:black;
+
+display:none;   /* důležité */
+
+align-items:center;
+justify-content:center;
+
+font-size:18px;
+
+box-shadow:0 0 6px rgba(0,0,0,0.5);
+cursor:pointer;
+
+z-index:25;
+}
 
 /* popup výběr admina */
 
@@ -578,7 +603,9 @@ Aplikace neobsahuje žádné reklamy, stahování souborů ani sběr osobních �
   <div class="pdfBtn" onclick="openCurrentPdf()">
     📄
   </div>
-
+<div class="statsBtn" onclick="openStatsPopup()">
+  📊
+</div>
 </div>
   
 <h1 class="appTitle">Prohozy</h1>
@@ -704,6 +731,15 @@ window.onload = async function(){
 /* zbytek JS NEZMĚNĚNÝ */
 
 function startApp(){
+ const admins = [
+  "marty.protiva@gmail.com",
+  "martymrazek@gmail.com"
+]
+
+if(admins.includes(userEmail)){
+  document.querySelector(".statsBtn").style.display = "flex"
+}
+  
   document.getElementById("loginScreen").style.display="none"
   document.querySelector(".container").style.display="block"
   document.getElementById("userInfo").innerText = userEmail
@@ -1120,6 +1156,85 @@ function openCurrentPdf(){
   showToast("Pro návrat přejeď prstem doleva")
 }
 
+async function openStatsPopup(){
+
+  document.getElementById("statsPopup").style.display="flex"
+
+  try{
+
+    const res = await fetch(
+      "https://prohozy-api.marty-protiva.workers.dev/api/stats-summary"
+    )
+
+    const data = await res.json()
+
+    document.getElementById("statsContent").innerHTML =
+      `
+      Otevření dnes: ${data.opens}<br>
+      Přidané prohozy: ${data.adds}<br>
+      Aktivní uživatelé: ${data.users}
+      `
+
+    drawChart(data.history)
+
+  }catch(e){
+
+    document.getElementById("statsContent").innerHTML =
+      "Chyba načítání"
+
+  }
+
+}
+  function closeStatsPopup(){
+
+  document.getElementById("statsPopup").style.display="none"
+
+}
+  function drawChart(history){
+
+  const canvas =
+    document.getElementById("statsChart")
+
+  const ctx =
+    canvas.getContext("2d")
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  )
+
+  if(!history || history.length === 0){
+    return
+  }
+
+  const max =
+    Math.max(...history)
+
+  const barWidth = 20
+
+  history.forEach((value, i) => {
+
+    const height =
+      (value / max) * 120
+
+    ctx.fillRect(
+      i * 30 + 10,
+      140 - height,
+      barWidth,
+      height
+    )
+
+  })
+
+}
+  function openNotifyPopup(){
+
+  alert("Tady bude odeslání notifikace")
+
+}
+  
 function closePdfViewer(){
 
   document.getElementById("pdfViewer").style.display = "none"
@@ -1128,7 +1243,30 @@ function closePdfViewer(){
 }
 
 </script>
-<!-- 🔥 Popup s kontakty -->
+ <div id="statsPopup" class="contactPopup">
+
+  <div class="contactBox">
+
+    <h3>Statistiky</h3>
+
+    <div id="statsContent">
+      Načítám...
+    </div>
+
+    <canvas id="statsChart" width="280" height="160"></canvas>
+
+    <button onclick="openNotifyPopup()">
+      Poslat oznámení
+    </button>
+
+    <button onclick="closeStatsPopup()">
+      Zavřít
+    </button>
+
+  </div>
+
+</div>
+  <!-- 🔥 Popup s kontakty -->
 <div id="contactPopup" class="contactPopup">
   <div class="contactBox">
 
