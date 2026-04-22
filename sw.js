@@ -12,11 +12,6 @@ self.addEventListener(
 
   }
 );
-
-self.addEventListener("fetch", (event) => {
-  event.respondWith(fetch(event.request));
-});
-
 self.addEventListener(
   "push",
   function(event){
@@ -34,17 +29,22 @@ self.addEventListener(
 
     event.waitUntil(
 
-      self.registration.showNotification(
-        data.title,
-        {
-          body: data.body,
-          icon:
-            "/Prohozy/icons/icon_192.png",
-          badge:
-            "/Prohozy/icons/icon_192.png"
-        }
+     self.registration.showNotification(
+  data.title,
+  {
+    body: data.body,
 
-      )
+    icon:
+      "/Prohozy/icons/icon_192.png",
+
+    badge:
+      "/Prohozy/icons/icon_192.png",
+
+    tag: "prohozy",
+
+    renotify: true
+  }
+)
 
     )
 
