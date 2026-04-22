@@ -1450,7 +1450,7 @@ function closePdfViewer(){
   document.getElementById("pdfFrame").src = ""
 
 }
-async function setTicker(){
+async function setTicker(btn){
 
   const od =
     document.getElementById("tickerOd").value
@@ -1466,52 +1466,60 @@ async function setTicker(){
 
   if(!od || !doData || !text){
 
-    alert(
-      "Vyplň datum od, do a text"
-    )
+    alert("Vyplň datum od, do a text")
 
     return
 
   }
 
+  // 🔒 ochrana proti dvojkliku
+
+  btn.disabled = true
+  btn.innerText = "Odesílám..."
+
   try{
 
-    await fetch(
+    const res = await fetch(
       "https://prohozy-api.marty-protiva.workers.dev/api/set-ticker",
       {
         method: "POST",
-
         headers: {
           "Content-Type":
             "application/json"
         },
-
         body: JSON.stringify({
-
           od: od,
-
           do: doData,
-
           text: text
-
         })
-
       }
     )
 
-    alert(
-      "Úspěšně nastaveno"
-    )
+    const data = await res.json()
 
-    document
-      .getElementById("tickerText")
-      .value = ""
+    if(data.ok){
+
+      alert("Proužek nastaven")
+
+      document
+        .getElementById("tickerText")
+        .value = ""
+
+    } else {
+
+      alert("Chyba uložení")
+
+      btn.disabled = false
+      btn.innerText = "Spustit proužek"
+
+    }
 
   }catch(e){
 
-    alert(
-      "Chyba nastavení tickeru"
-    )
+    alert("Chyba spojení")
+
+    btn.disabled = false
+    btn.innerText = "Spustit proužek"
 
   }
 
@@ -1551,7 +1559,7 @@ async function setTicker(){
   placeholder="Text tickeru"
 ></textarea>
 
-<button onclick="setTicker()">
+<button onclick="setTicker(this)">
 Spustit proužek
 </button>
       <button onclick="closeStatsPopup()">
