@@ -434,35 +434,7 @@ body.loading .container{
     transform: translateX(-100%);
   }
 }
-  .pushBtn{
-position:absolute;
-
-right:210px;   /* 👈 vlevo od statistik */
-
-top:230px;
-
-width:40px;
-height:40px;
-
-border-radius:50%;
-
-background:#FFD400;
-color:black;
-
-display:none;   /* zobrazí se jen když je potřeba */
-
-align-items:center;
-justify-content:center;
-
-font-size:18px;
-
-box-shadow:0 0 6px rgba(0,0,0,0.5);
-cursor:pointer;
-
-z-index:25;
-}
-  
-  /* 🔥 Kontakt tlačítko vpravo nahoře */
+    /* 🔥 Kontakt tlačítko vpravo nahoře */
    .pdfBtn{
 position:absolute;
 right:50px;   /* vedle WhatsApp */
@@ -633,13 +605,6 @@ Aplikace neobsahuje žádné reklamy, stahování souborů ani sběr osobních �
   </div>
 <div class="statsBtn" onclick="openStatsPopup()">
   📊
-</div>
-  <div
-  id="enablePushBtn"
-  class="pushBtn"
-  onclick="enablePush()"
->
-🔔
 </div>
 </div>
   
@@ -812,27 +777,12 @@ if(admins.includes(userEmail)){
       akce:"open"
     })
   }).catch(()=>{})
-setTimeout(async ()=>{
 
-  if(!("serviceWorker" in navigator)){
-    return
-  }
+setTimeout(()=>{
 
-  const reg =
-    await navigator.serviceWorker.ready
+  autoRegisterPush()
 
-  const sub =
-    await reg.pushManager.getSubscription()
-
-  if(!sub){
-
-    document.getElementById(
-      "enablePushBtn"
-    ).style.display = "block"
-
-  }
-
-},1500)
+},2000)
 }
 
 async function login(){
@@ -930,8 +880,6 @@ fetch("https://prohozy-api.marty-protiva.workers.dev/api/stats", {
 alert("Prohoz odeslán")
 // 🔥 2. RESET PO ALERTU (KLÍČ)
 document.activeElement.blur()
-document.body.style.zoom = "1"
-
 // 🔥 3. zavřít popup
 closePopup()
 
@@ -1005,30 +953,7 @@ document.getElementById("popup").addEventListener("click", function(e) {
     closePopup();
   }
 });
-async function enablePush(){
 
-  const permission =
-    await Notification.requestPermission()
-
-  if(permission !== "granted"){
-
-    alert("Oznámení nebyla povolena")
-
-    return
-
-  }
-
-  await registerPush()
-
-  document.getElementById(
-    "enablePushBtn"
-  ).style.display = "none"
-
-  alert("Oznámení zapnuta")
-
-}
-  
-  
   function copyText(el){
 navigator.clipboard.writeText(el.innerText)
 showToast("Text zkopírován")
@@ -1247,82 +1172,6 @@ function urlBase64ToUint8Array(base64String){
   return outputArray
 
 }
-  
-  async function registerPush(){
-
-
-  if(!("serviceWorker" in navigator)){
-    alert("no service worker")
-    return
-  }
-
-  try{
-
-    const reg =
-      await navigator.serviceWorker.ready
-
-    let sub =
-      await reg.pushManager.getSubscription()
-
-    if(sub){
-      // pokud existuje, zruš ho a vytvoř nový
-      await sub.unsubscribe()
-    }
-
-    sub =
-      await reg.pushManager.subscribe({
-
-        userVisibleOnly: true,
-
-        applicationServerKey:
-          urlBase64ToUint8Array(
-            "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
-          )
-
-      })
-
-        const res =
-      await fetch(
-        "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-
-            email: userEmail,
-
-            subscription:
-              JSON.stringify(sub)
-
-          })
-        }
-      )
-
-    const text =
-      await res.text()
-
-    alert(
-      "subscribe response:\n" +
-      text
-    )
-
-  }catch(e){
-
-    alert(
-      "subscribe error:\n" +
-      e.message
-    )
-
-    console.log(
-      "push subscribe error",
-      e
-    )
-
-  }
-
-}
 </script>
 <script>
 function openCurrentPdf(){
@@ -1374,6 +1223,85 @@ document.querySelector(".statsBtn").style.display = "none";
   }
 
 }
+  async function autoRegisterPush(){
+
+  if(!("serviceWorker" in navigator)){
+    return
+  }
+
+  try{
+
+    const permission =
+  Notification.permission
+
+    if(permission === "denied"){
+      return
+    }
+
+    const reg =
+      await navigator.serviceWorker.ready
+
+    let sub =
+      await reg.pushManager.getSubscription()
+
+    if(!sub){
+
+      if(permission !== "granted"){
+
+        const result =
+          await Notification.requestPermission()
+
+        if(result !== "granted"){
+          return
+        }
+
+      }
+
+      sub =
+        await reg.pushManager.subscribe({
+
+          userVisibleOnly: true,
+
+          applicationServerKey:
+            urlBase64ToUint8Array(
+              "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
+            )
+
+        })
+
+    }
+
+    await fetch(
+      "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+        body: JSON.stringify({
+
+          email:
+            userEmail,
+
+          subscription:
+            JSON.stringify(sub)
+
+        })
+      }
+    )
+
+  }catch(e){
+
+    console.log(
+      "auto push error",
+      e
+    )
+
+  }
+
+}
+  
   function closeStatsPopup(){
 
   document.getElementById("statsPopup").style.display="none"
