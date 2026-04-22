@@ -1420,7 +1420,72 @@ function closePdfViewer(){
   document.getElementById("pdfFrame").src = ""
 
 }
+async function setTicker(){
 
+  const od =
+    document.getElementById("tickerOd").value
+
+  const doData =
+    document.getElementById("tickerDo").value
+
+  const text =
+    document
+      .getElementById("tickerText")
+      .value
+      .trim()
+
+  if(!od || !doData || !text){
+
+    alert(
+      "Vyplň datum od, do a text"
+    )
+
+    return
+
+  }
+
+  try{
+
+    await fetch(
+      "https://prohozy-api.marty-protiva.workers.dev/api/set-ticker",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body: JSON.stringify({
+
+          od: od,
+
+          do: doData,
+
+          text: text
+
+        })
+
+      }
+    )
+
+    alert(
+      "Úspěšně nastaveno"
+    )
+
+    document
+      .getElementById("tickerText")
+      .value = ""
+
+  }catch(e){
+
+    alert(
+      "Chyba nastavení tickeru"
+    )
+
+  }
+
+}
 </script>
  <div id="statsPopup" class="contactPopup">
 
@@ -1433,7 +1498,30 @@ function closePdfViewer(){
     </div>
 
    <canvas id="statsChart" height="180" style="width:100%; max-width:100%;"></canvas>
+<hr style="border:1px solid #444; width:100%; margin:10px 0;">
 
+<h3>Nastavit ticker</h3>
+
+<input
+  type="date"
+  id="tickerOd"
+  style="height:44px; font-size:16px;"
+>
+
+<input
+  type="date"
+  id="tickerDo"
+  style="height:44px; font-size:16px;"
+>
+
+<textarea
+  id="tickerText"
+  placeholder="Text tickeru"
+></textarea>
+
+<button onclick="setTicker()">
+Spustit ticker
+</button>
       <button onclick="closeStatsPopup()">
       Zavřít
     </button>
