@@ -777,12 +777,6 @@ if(admins.includes(userEmail)){
       akce:"open"
     })
   }).catch(()=>{})
-
-setTimeout(()=>{
-
-  autoRegisterPush()
-
-},2000)
 }
 
 async function login(){
@@ -1144,36 +1138,6 @@ function contactAdmin(phone){
   });
 
 });
-function urlBase64ToUint8Array(base64String){
-
-  const padding =
-    "=".repeat(
-      (4 - base64String.length % 4) % 4
-    )
-
-  const base64 =
-    (base64String + padding)
-      .replace(/\-/g,"+")
-      .replace(/_/g,"/")
-
-  const rawData =
-    window.atob(base64)
-
-  const outputArray =
-    new Uint8Array(
-      rawData.length
-    )
-
-  for(let i = 0; i < rawData.length; ++i){
-
-    outputArray[i] =
-      rawData.charCodeAt(i)
-
-  }
-
-  return outputArray
-
-}
 </script>
 <script>
 function openCurrentPdf(){
@@ -1225,85 +1189,7 @@ document.querySelector(".statsBtn").style.display = "none";
   }
 
 }
-  async function autoRegisterPush(){
-
-  if(!("serviceWorker" in navigator)){
-    return
-  }
-
-  try{
-
-    const permission =
-  Notification.permission
-
-    if(permission === "denied"){
-      return
-    }
-
-    const reg =
-      await navigator.serviceWorker.ready
-
-    let sub =
-      await reg.pushManager.getSubscription()
-
-    if(!sub){
-
-      if(permission !== "granted"){
-
-        const result =
-          await Notification.requestPermission()
-
-        if(result !== "granted"){
-          return
-        }
-
-      }
-
-      sub =
-        await reg.pushManager.subscribe({
-
-          userVisibleOnly: true,
-
-          applicationServerKey:
-            urlBase64ToUint8Array(
-              "BJBtwiWOUB8KyvviiF7Mq5nJEy0BeJp1dHkpxGoPhBK5OymSsq1m0fnyYrmYmwo7kuQWd8N6DiVz5AcnFNqnh9E"
-            )
-
-        })
-
-    }
-
-    await fetch(
-      "https://prohozy-api.marty-protiva.workers.dev/api/subscribe",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-        body: JSON.stringify({
-
-          email:
-            userEmail,
-
-          subscription:
-            JSON.stringify(sub)
-
-        })
-      }
-    )
-
-  }catch(e){
-
-    console.log(
-      "auto push error",
-      e
-    )
-
-  }
-
-}
-  
+   
   function closeStatsPopup(){
 
   document.getElementById("statsPopup").style.display="none"
@@ -1527,53 +1413,7 @@ function roundRect(
   ctx.closePath()
 
 }
- async function openNotifyPopup(){
-
-  const message =
-    prompt(
-      "Zadej oznámení pro všechny uživatele"
-    )
-
-  if(!message){
-    return
-  }
-
-  try{
-
-    await fetch(
-      "https://prohozy-api.marty-protiva.workers.dev/api/notify",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-        body: JSON.stringify({
-
-          title:
-            "Prohozy",
-
-          message:
-            message
-
-        })
-      }
-    )
-
-    alert(
-      "Oznámení odesláno"
-    )
-
-  }catch(e){
-
-    alert(
-      "Chyba odeslání"
-    )
-
-  }
-
-}
-  
+ 
 function closePdfViewer(){
 
   document.getElementById("pdfViewer").style.display = "none"
@@ -1594,11 +1434,7 @@ function closePdfViewer(){
 
    <canvas id="statsChart" height="180" style="width:100%; max-width:100%;"></canvas>
 
-    <button onclick="openNotifyPopup()">
-      Poslat oznámení
-    </button>
-
-    <button onclick="closeStatsPopup()">
+      <button onclick="closeStatsPopup()">
       Zavřít
     </button>
 
