@@ -1109,7 +1109,9 @@ if (ticker) {
 
 <script>
 if ('serviceWorker' in navigator) {
-navigator.serviceWorker.register('/Prohozy/sw.js');
+navigator.serviceWorker.register(
+  "/Prohozy/sw.js?v=2"
+);
 }
   function openContactPopup(){
   document.getElementById("contactPopup").style.display="flex"
