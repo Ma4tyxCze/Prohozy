@@ -1529,7 +1529,8 @@ async function setTicker(btn){
       document
         .getElementById("tickerInput")
         .value = ""
-
+      loadTicker()
+      closeStatsPopup()
     } else {
 
       alert("Chyba uložení")
