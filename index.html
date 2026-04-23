@@ -1603,47 +1603,7 @@ async function checkAppVersion(){
   }catch(e){}
 
 }
-  async function toggleTicker(btn){
-
-  if(btn){
-    btn.disabled = true
-    btn.innerText = "Přepínám..."
-  }
-
-  try{
-
-    const res = await fetch(
-      "https://prohozy-api.marty-protiva.workers.dev/api/toggle-ticker",
-      {
-        method:"POST"
-      }
-    )
-
-    const data = await res.json()
-
-   if(data.ok){
-
-  alert("Hotovo!")
-
-  setTimeout(()=>{
-    loadTicker()
-  },500)
-
-}
-
-  }catch(e){
-
-    alert("Chyba")
-
-  }
-
-  if(btn){
-    btn.disabled = false
-    btn.innerText =
-      "🔴 Vypnout / Zapnout proužek"
-  }
-
-}
+  
  async function restartAll(btn){
 
   if(!confirm(
@@ -1727,9 +1687,6 @@ async function checkAppVersion(){
 
 <button onclick="setTicker(this)">
 Spustit proužek
-</button>
-<button onclick="toggleTicker(this)">
-🔴 Vypnout / Zapnout proužek
 </button>
     <!-- <button onclick="restartAll(this)">
 🔄 Restartovat appku
