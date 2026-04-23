@@ -774,7 +774,9 @@ window.onload = async function(){
 /* zbytek JS NEZMĚNĚNÝ */
 
 function startApp(){
- const admins = [
+checkAppVersion() 
+  
+const admins = [
   "marty.protiva@gmail.com",
   "martymrazek@gmail.com"
 ]
@@ -1548,6 +1550,92 @@ async function setTicker(btn){
   btn.innerText = "Spustit proužek"
 
 }
+async function checkAppVersion(){
+
+  try{
+
+    const res =
+      await fetch(
+        "https://prohozy-api.marty-protiva.workers.dev/api/restart"
+      )
+
+    const data =
+      await res.json()
+
+    const current =
+      localStorage.getItem(
+        "app_version"
+      )
+
+    if(
+      current &&
+      current !== String(data.version)
+    ){
+
+      showToast(
+        "Aktualizuji aplikaci..."
+      )
+
+      setTimeout(()=>{
+        location.reload()
+      },800)
+
+    }
+
+    localStorage.setItem(
+      "app_version",
+      data.version
+    )
+
+  }catch(e){}
+
+}
+ async function restartAll(btn){
+
+  if(!confirm(
+    "Restartovat aplikaci všem uživatelům?"
+  )) return
+
+  btn.disabled = true
+  btn.innerText = "Restartuji..."
+
+  try{
+
+    const res =
+      await fetch(
+        "https://prohozy-api.marty-protiva.workers.dev/api/restart",
+        {
+          method:"POST"
+        }
+      )
+
+    const data =
+      await res.json()
+
+    if(data.ok){
+
+      localStorage.setItem(
+        "app_version",
+        data.version
+      )
+
+      alert(
+        "Restart odeslán všem"
+      )
+
+    }
+
+  }catch(e){
+
+    alert("Chyba restartu")
+
+  }
+
+  btn.disabled = false
+  btn.innerText =
+    "🔄 Restartovat všem zařízení"
+
+}
 </script>
  <div id="statsPopup" class="contactPopup">
 
@@ -1586,7 +1674,10 @@ async function setTicker(btn){
 <button onclick="setTicker(this)">
 Spustit proužek
 </button>
-      <button onclick="closeStatsPopup()">
+   <button onclick="restartAll()">
+🔄 Restartovat appku
+</button>
+    <button onclick="closeStatsPopup()">
       Zavřít
     </button>
 
