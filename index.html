@@ -24,7 +24,8 @@ img-src 'self' https: data:;
 connect-src 'self' https:;
 frame-src 'self' https:;
 ">
-
+<meta http-equiv="Content-Security-Policy"
+content="default-src 'self' https: data: blob:;">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="Referrer-Policy" content="no-referrer">
 <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
